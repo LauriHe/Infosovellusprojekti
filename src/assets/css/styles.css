@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+img {
+  height: 100%;
+  filter: contrast(600%) brightness(200%);
+  animation-name: animation;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+}
+
+@keyframes animation {
+  from {
+    height: 1%;
+  }
+  to {
+    height: 100%;
+  }
+}
