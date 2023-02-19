@@ -10,41 +10,56 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-      {
-        from: 'assets/',
-        to: 'assets/',
-        context: 'src/',
-      },
-    ]}),
+        {
+          from: 'assets/',
+          to: 'assets/',
+          context: 'src/',
+        },
+      ],
+    }),
     new HtmlWebpackPlugin({
       title: 'WTMP Starter',
       meta: {
-        viewport: 'width=device-width, initial-scale=1.0'
+        viewport: 'width=device-width, initial-scale=1.0',
       },
       template: './src/index.html',
       minify: {
         removeComments: true,
-        collapseWhitespace: true
+        collapseWhitespace: true,
       },
     }),
-    new ESLintPlugin({})
+    new ESLintPlugin({}),
   ],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true
+    clean: true,
   },
   optimization: {
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: 'all',
+    },
   },
   module: {
     rules: [
       {
         test: /\.(png|svg|jpg|gif)$/,
-        type: 'asset/resource'
-      }
-    ]
-  }
+        type: 'asset/resource',
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              // Prefer `dart-sass`
+              implementation: require('sass'),
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
