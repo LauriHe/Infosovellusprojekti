@@ -12,3 +12,15 @@ $metropolia-orange: #ff5000;
 $metropolia-grey: #53565a;
 $white: #fff;
 $black: #000;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
