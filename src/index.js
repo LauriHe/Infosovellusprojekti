@@ -3,28 +3,11 @@ import registerSW from './modules/serviceWorker';
 import resizeBackground from './modules/backgroundResizer';
 import getFazerMenu from './modules/fazer';
 import getSodexoMenu from './modules/sodexo';
+import {doFetch} from './modules/network';
+import campuses from './modules/campuses';
 
-const lang = 'en';
-const activeCampus = 'myllypuro';
-
-const campuses = {
-  arabia: {
-    restaurant: 'fazer',
-    index: '1251',
-  },
-  karamalmi: {
-    restaurant: 'fazer',
-    index: '3208',
-  },
-  myllypuro: {
-    restaurant: 'sodexo',
-    index: '158',
-  },
-  myyrmäki: {
-    restaurant: 'sodexo',
-    index: '152',
-  },
-};
+let lang;
+let activeCampus;
 
 const getLunchMenu = async () => {
   const menu =
@@ -69,7 +52,19 @@ const renderCards = async (cardContainer) => {
   });
 };
 
-const initializeLunchPage = () => {
+const getConfig = async () => {
+  return await doFetch(
+    'https://users.metropolia.fi/~lauhei/Web-teknologiat-ja-media-alustat/Projekti/dsconfig.JSON',
+    true
+  );
+};
+
+const initializeLunchPage = async () => {
+  // Get config and set global variables
+  const config = await getConfig();
+  lang = config.lang;
+  activeCampus = config.campus;
+
   const body = document.body;
   body.innerHTML = '';
 
