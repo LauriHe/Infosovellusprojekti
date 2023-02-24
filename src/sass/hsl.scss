@@ -1,0 +1,58 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/images/transportationPattern.jpeg);
+  filter: brightness(0.95);
+  background-size: 50em;
+  position: absolute;
+  z-index: -1;
+}
+
+h1 {
+  margin: 5rem 0;
+  font-size: 4.5em;
+  color: rgb(8 117 189);
+  background-color: #f2f2f2;
+  box-shadow: 0 0 2rem #f2f2f2;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+}
+
+.card-container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  gap: 1em;
+
+  .card {
+    width: 17em;
+    height: fit-content;
+    padding: 2em 1em;
+    background-color: #fff;
+    border-radius: 0.5em;
+    box-shadow: 0 0 1em #00000035;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1em;
+
+    p{
+      margin-bottom: .5em;
+    }
+  }
+}
+
+.card-title {
+  color: rgb(255, 123, 0);
+}
