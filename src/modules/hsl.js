@@ -9,6 +9,8 @@ const getHslStopsByCoords = async (coords, radius) => {
               stop {
                 gtfsId
                 name
+                lat
+                lon
               }
               distance
             }
@@ -39,6 +41,7 @@ const getHslStopsByCoords = async (coords, radius) => {
       name: edge.node.stop.name,
       gtfsId: edge.node.stop.gtfsId,
       distance: edge.node.distance,
+      coords: [edge.node.stop.lat, edge.node.stop.lon],
     };
   });
 

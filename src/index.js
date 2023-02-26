@@ -1,26 +1,39 @@
 import './sass/style.scss';
 import registerSW from './modules/serviceWorker';
 import resizeBackground from './modules/backgroundResizer';
+import getConfig from './modules/getConfig';
 import campuses from './modules/campuses';
 import {getHslStopsByCoords, getHslScedules} from './modules/hsl';
+import renderMap from './modules/map';
 
-const activeCampus = 'arabia';
-const searchRadius = 500;
+let activeCampus;
+let searchRadius;
+let activeCoords;
 
-// get coordinates for active campus from campuses.JSON
-const activeCoords = [
-  campuses[activeCampus].location.split(',')[0],
-  campuses[activeCampus].location.split(',')[1],
-];
-
-const renderData = async (cardContainer, background) => {
+// render data to page
+const renderData = async (mapElement, cardContainer, background) => {
   // get stops for desired coordinates within search radius
-  const stops = await getHslStopsByCoords(activeCoords, searchRadius);
+  let stops = await getHslStopsByCoords(activeCoords, searchRadius);
+  stops = stops.slice(0, 5);
 
-  // create cards for each stop
-  Object.entries(stops).forEach(async (stop) => {
+  let stopIndex = 0;
+
+  const renderStop = async () => {
+    // remove all cards from card container
+    cardContainer.innerHTML = '';
+
+    // get stop from stops array
+    const stop = stops[stopIndex];
+
+    // increment stop index
+    stopIndex += 1;
+    // if stop index is larger than stops array length, reset stop index
+    if (stopIndex >= stops.length) {
+      stopIndex = 0;
+    }
+
     // get schedules for each stop
-    const schedules = await getHslScedules(stop[1].gtfsId);
+    const schedules = await getHslScedules(stop.gtfsId);
 
     // if stop has no schedules, don't create a card
     if (schedules.stoptimesWithoutPatterns.length > 0) {
@@ -30,7 +43,7 @@ const renderData = async (cardContainer, background) => {
 
       // card heading
       const heading = document.createElement('h3');
-      heading.innerHTML = stop[1].name;
+      heading.innerHTML = stop.name;
       card.appendChild(heading);
 
       // display arrival and departure times for each schedule
@@ -79,11 +92,29 @@ const renderData = async (cardContainer, background) => {
       // resize background in case card container is larger than window
       resizeBackground(background);
     }
-  });
+    renderMap(mapElement, activeCoords, stop.coords);
+  };
+  renderStop();
+  setInterval(renderStop, 5000);
 };
 
-// create nessesary html elements
+// set variables and create nessesary html elements
 const initializeHSLPage = async () => {
+  // get config and set global variables
+  const config = await getConfig();
+  activeCampus = config.campus;
+  searchRadius = config.searchRadius;
+
+  // temporary values for testing
+  activeCampus = 'myyrmaki';
+  searchRadius = 500;
+
+  // get coordinates for active campus from campuses.JSON
+  activeCoords = [
+    campuses[activeCampus].location.split(',')[0],
+    campuses[activeCampus].location.split(',')[1],
+  ];
+
   const body = document.body;
   body.innerHTML = '';
 
@@ -99,14 +130,26 @@ const initializeHSLPage = async () => {
     activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1)
   }`;
 
+  const mapContainer = document.createElement('div');
+  mapContainer.classList.add('map-container');
+
+  const mapElement = document.createElement('div');
+  mapElement.id = 'map';
+
+  mapContainer.appendChild(mapElement);
+
   const cardContainer = document.createElement('div');
   cardContainer.classList.add('card-container');
 
+  const main = document.createElement('main');
+  main.appendChild(mapContainer);
+  main.appendChild(cardContainer);
+
   body.appendChild(background);
   body.appendChild(heading);
-  body.appendChild(cardContainer);
+  body.appendChild(main);
 
-  renderData(cardContainer, background);
+  renderData(mapElement, cardContainer, background);
 };
 
 initializeHSLPage();
