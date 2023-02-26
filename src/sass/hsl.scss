@@ -1,3 +1,5 @@
+@use 'base.scss';
+
 body {
   display: flex;
   flex-direction: column;
@@ -18,7 +20,7 @@ body {
 h1 {
   margin: 5rem 0;
   font-size: 4.5em;
-  color: rgb(8 117 189);
+  color: base.$metropolia-orange;
   background-color: #f2f2f2;
   box-shadow: 0 0 2rem #f2f2f2;
   padding: 0 0.5rem;
@@ -30,11 +32,15 @@ main{
   display: flex;
   justify-content: center;
   gap: 2em;
+  height: 60%;
 }
 
 .map-container {
   width: 40%;
   position: relative;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 0 0 1em #00000035;
 }
 
 #map{
@@ -46,7 +52,7 @@ main{
 
 .card-container {
   width: fit-content;
-  height: fit-content;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -55,16 +61,20 @@ main{
 
   .card {
     width: 20em;
-    height: fit-content;
+    height: 100%;
     padding: 2em 1em;
     background-color: #fff;
     border-radius: 0.5em;
     box-shadow: 0 0 1em #00000035;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: start;
     gap: 1em;
+
+    h3{
+      color: base.$metropolia-orange;
+    }
 
     p{
       margin-bottom: .5em;

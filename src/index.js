@@ -4,7 +4,7 @@ import resizeBackground from './modules/backgroundResizer';
 import getConfig from './modules/getConfig';
 import campuses from './modules/campuses';
 import {getHslStopsByCoords, getHslScedules} from './modules/hsl';
-import renderMap from './modules/map';
+import {renderMap, addMarker, deleteMarkers} from './modules/map';
 
 let activeCampus;
 let searchRadius;
@@ -16,11 +16,20 @@ const renderData = async (mapElement, cardContainer, background) => {
   let stops = await getHslStopsByCoords(activeCoords, searchRadius);
   stops = stops.slice(0, 5);
 
+  // index for stops array
   let stopIndex = 0;
 
+  // clear card container
+  cardContainer.innerHTML = '';
+
+  // create card
+  const stopInfoBox = document.createElement('div');
+  stopInfoBox.classList.add('card');
+
+  // render schedule for a stop and update map
   const renderStop = async () => {
-    // remove all cards from card container
-    cardContainer.innerHTML = '';
+    // clear card
+    stopInfoBox.innerHTML = '';
 
     // get stop from stops array
     const stop = stops[stopIndex];
@@ -37,14 +46,10 @@ const renderData = async (mapElement, cardContainer, background) => {
 
     // if stop has no schedules, don't create a card
     if (schedules.stoptimesWithoutPatterns.length > 0) {
-      // create card
-      const card = document.createElement('div');
-      card.classList.add('card');
-
       // card heading
       const heading = document.createElement('h3');
       heading.innerHTML = stop.name;
-      card.appendChild(heading);
+      stopInfoBox.appendChild(heading);
 
       // display arrival and departure times for each schedule
       Object.entries(schedules.stoptimesWithoutPatterns).forEach((schedule) => {
@@ -83,19 +88,26 @@ const renderData = async (mapElement, cardContainer, background) => {
         div.appendChild(scheduledDeparture);
 
         // append div to card
-        card.appendChild(div);
+        stopInfoBox.appendChild(div);
       });
 
       // append card to card container
-      cardContainer.appendChild(card);
+      cardContainer.appendChild(stopInfoBox);
 
       // resize background in case card container is larger than window
       resizeBackground(background);
+
+      // delete markers and add new marker
+      deleteMarkers();
+      addMarker(stop.coords);
     }
-    renderMap(mapElement, activeCoords, stop.coords);
   };
+  // render map
+  renderMap(mapElement, activeCoords);
+
+  // render first stop and start interval to render next stops
   renderStop();
-  setInterval(renderStop, 5000);
+  //setInterval(renderStop, 5000);
 };
 
 // set variables and create nessesary html elements
@@ -106,7 +118,7 @@ const initializeHSLPage = async () => {
   searchRadius = config.searchRadius;
 
   // temporary values for testing
-  activeCampus = 'myyrmaki';
+  activeCampus = 'karamalmi';
   searchRadius = 500;
 
   // get coordinates for active campus from campuses.JSON
