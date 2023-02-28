@@ -54,12 +54,11 @@ const renderData = async (mapElement, cardContainer, background) => {
       // display arrival and departure times for each schedule
       Object.entries(schedules.stoptimesWithoutPatterns).forEach((schedule) => {
         // create div for each schedule
-        const div = document.createElement('div');
+        
 
         // heading for each schedule
-        const headsign = document.createElement('p');
+        const headsign = document.createElement('h5');
         headsign.innerHTML = `${schedule[1].headsign}:`;
-
         // format scheduled arrival time
         const scheduledArrivalSeconds = new Date(0);
         scheduledArrivalSeconds.setSeconds(schedule[1].scheduledArrival);
@@ -68,8 +67,11 @@ const renderData = async (mapElement, cardContainer, background) => {
           .substring(11, 16);
 
         // create p element for scheduled arrival time
+        const div2 = document.createElement('div');
         const scheduledArrival = document.createElement('p');
-        scheduledArrival.innerHTML = `Scheduled arrival: ${scheduledArrivalTime}`;
+        scheduledArrival.innerHTML = `Scheduled arrival: `;
+        const scheduledArrival2 = document.createElement('time');
+        scheduledArrival2.innerHTML = `${scheduledArrivalTime}`;
 
         // format scheduled departure time
         const scheduledDepartureSeconds = new Date(0);
@@ -80,15 +82,20 @@ const renderData = async (mapElement, cardContainer, background) => {
 
         // create p element for scheduled departure time
         const scheduledDeparture = document.createElement('p');
-        scheduledDeparture.innerHTML = `Scheduled departure: ${scheduledDepartureTime}`;
+        scheduledDeparture.innerHTML = `Scheduled departure:`;
+        const scheduledDeparture2 = document.createElement('time');
+        scheduledDeparture2.innerHTML = ` ${scheduledDepartureTime}`;
 
         // append elements to div
-        div.appendChild(headsign);
-        div.appendChild(scheduledArrival);
-        div.appendChild(scheduledDeparture);
-
+        
+        div2.appendChild(scheduledArrival);
+        div2.appendChild(scheduledArrival2);
+        div2.appendChild(scheduledDeparture);
+        div2.appendChild(scheduledDeparture2);
+        
         // append div to card
-        stopInfoBox.appendChild(div);
+        stopInfoBox.appendChild(headsign);
+        stopInfoBox.appendChild(div2);
       });
 
       // append card to card container
@@ -107,7 +114,7 @@ const renderData = async (mapElement, cardContainer, background) => {
 
   // render first stop and start interval to render next stops
   renderStop();
-  //setInterval(renderStop, 5000);
+  setInterval(renderStop, 5000);
 };
 
 // set variables and create nessesary html elements

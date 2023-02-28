@@ -48,6 +48,7 @@ const getHslStopsByCoords = async (coords, radius) => {
   return stops;
 };
 
+
 // get next schedules for given stop
 const getHslScedules = async (stopId) => {
   // GraphQL query

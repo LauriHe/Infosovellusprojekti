@@ -18,7 +18,7 @@ body {
 }
 
 h1 {
-  margin: 5rem 0;
+  margin: 2rem 0;
   font-size: 4.5em;
   color: base.$metropolia-orange;
   background-color: #f2f2f2;
@@ -31,16 +31,17 @@ main{
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 2em;
-  height: 60%;
+  
+  height: 80%;
 }
 
 .map-container {
-  width: 40%;
+  width: 60%;
   position: relative;
-  border-radius: 0.5em;
+  border-radius: 0em 0.5em 0.5em 0em;
   overflow: hidden;
   box-shadow: 0 0 1em #00000035;
+  order: 2;
 }
 
 #map{
@@ -49,6 +50,15 @@ main{
   bottom: 0;
   width: 100%;
 }
+.mapboxgl-marker{
+  background-image: url('../assets/images/icons8-bus-stop-50.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  
+}
+
 
 .card-container {
   width: fit-content;
@@ -58,26 +68,47 @@ main{
   justify-content: center;
   align-items: start;
   gap: 1em;
+  order: 1;
 
   .card {
     width: 20em;
     height: 100%;
-    padding: 2em 1em;
+    padding: 1em 1em;
     background-color: #fff;
-    border-radius: 0.5em;
+    border-radius: 0.5em 0em 0em 0.5em;
     box-shadow: 0 0 1em #00000035;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    gap: 1em;
+    
+    gap: 1.5em;
 
     h3{
       color: base.$metropolia-orange;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      margin: 1em;
+    }
+    h5{
+      font-size: 14px;
     }
 
-    p{
-      margin-bottom: .5em;
+    div{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-right: 1em;
+    }
+
+    div > p{
+      display: flex;
+      
+    }
+    div > time{
+      margin-bottom: 0.5em;
+      display: flex;
+      color: base.$metropolia-orange;
     }
   }
 }
