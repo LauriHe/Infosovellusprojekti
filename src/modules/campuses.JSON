@@ -2,12 +2,35 @@
   "arabia": {
     "restaurant": "fazer",
     "index": "1251",
-    "location": "60.209765,24.976304"
+    "location": "60.209765,24.976304",
+    "room": {
+      "0": "AR361",
+      "1": "AR364",
+      "2": "AR230",
+      "3": "AS311",
+      "4": "AR437",
+      "5": "AR434",
+      "6": "ARP30",
+      "7": "AR438",
+      "8": "AR130"
+    }
   },
   "karamalmi": {
     "restaurant": "fazer",
     "index": "3208",
-    "location": "60.224051,24.758132"
+    "location": "60.224051,24.758132",
+    "room": {
+      "0": "KME225",
+      "1": "KMF231",
+      "2": "KME572",
+      "3": "KME651",
+      "4": "KME772",
+      "5": "KME773",
+      "6": "KME590",
+      "7": "KME690",
+      "8": "KME790",
+      "9": "KMC551"
+    }
   },
   "myllypuro": {
     "restaurant": "sodexo",
