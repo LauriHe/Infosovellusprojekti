@@ -14,69 +14,112 @@
 import {doFetch} from './network';
 
 const getFazerMenu = async (campusIndex, lang) => {
-  // Arrays to store the courses
-  let fazerCoursesfi = [];
-  let fazerCoursesen = [];
-
   try {
     // Fetch the weekly menu from Sodexo API
     const MenuFi = await doFetch(
       `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campusIndex}&language=fi`,
       true
     );
-    // Push the courses to the array
-    Object.entries(MenuFi.MenusForDays[0].SetMenus).forEach((menu) => {
-      fazerCoursesfi.push(menu[1]);
-    });
 
     // Fetch the weekly menu from Sodexo API
     const MenuEn = await doFetch(
       `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campusIndex}&language=en`,
       true
     );
-    // Push the courses to the array
-    Object.entries(MenuEn.MenusForDays[0].SetMenus).forEach((menu) => {
-      fazerCoursesen.push(menu[1]);
-    });
 
-    // Array to store the formated courses
-    const courses = [];
+    console.log(MenuFi);
+
+    let fazerMenu = [];
+
     if (lang === 'en') {
-      // Loop through courses and format them
-      for (let i = 0; i < fazerCoursesen.length; i++) {
+      Object.entries(MenuEn.MenusForDays).forEach((menu) => {
+        fazerMenu.push(menu[1].SetMenus);
+      });
+    } else {
+      Object.entries(MenuFi.MenusForDays).forEach((menu) => {
+        fazerMenu.push(menu[1].SetMenus);
+      });
+    }
+
+    fazerMenu = fazerMenu.slice(0, 5);
+
+    const menu = [];
+    let dayIndex = 0;
+
+    console.log(fazerMenu);
+
+    // Loop through each day
+    fazerMenu.forEach((day) => {
+      // Array to store the formated courses
+      const formatedDay = {
+        date: 0,
+        courses: [],
+      };
+
+      switch (dayIndex) {
+        case 0:
+          lang === 'en'
+            ? (formatedDay.date = 'Monday')
+            : (formatedDay.date = 'Maanantai');
+          break;
+        case 1:
+          lang === 'en'
+            ? (formatedDay.date = 'Tuesday')
+            : (formatedDay.date = 'Tiistai');
+          break;
+        case 2:
+          lang === 'en'
+            ? (formatedDay.date = 'Wednesday')
+            : (formatedDay.date = 'Keskiviikko');
+          break;
+        case 3:
+          lang === 'en'
+            ? (formatedDay.date = 'Thursday')
+            : (formatedDay.date = 'Torstai');
+          break;
+        case 4:
+          lang === 'en'
+            ? (formatedDay.date = 'Friday')
+            : (formatedDay.date = 'Perjantai');
+          break;
+        default:
+          break;
+      }
+
+      dayIndex++;
+
+      console.log(day);
+
+      //let courseIndex = 0;
+      // Format each days courses
+      day.forEach((course) => {
+        //courseIndex++;
         // Store the needed data
-        const name = fazerCoursesen[i].Components[0].split(' (')[0];
-        const properties = '(' + fazerCoursesen[i].Components[0].split(' (')[1];
-        let price = fazerCoursesfi[i].Price.split('/')[0].replace(',', '.');
+        const name = course.Components[0].split(' (')[0];
+        const properties = '(' + course.Components[0].split(' (')[1] + '(';
+        let price;
+        if (lang === 'en') {
+          price = course.Price;
+        } else {
+          price = course.Price;
+        }
+        //console.log(MenuFi);
 
         // Create a course object and use the stored data
-        const course = {
-          name: name,
-          properties: properties,
-          price: price,
-        };
-        // Push the course to the array
-        courses.push(course);
-      }
-      return courses;
-    } else {
-      // Same as above but with Finnish data
-      fazerCoursesfi.forEach((fazerCourse) => {
-        const name = fazerCourse.Components[0].split(' (')[0];
-        const properties = '(' + fazerCourse.Components[0].split(' (')[1];
-        const price = fazerCourse.Price.split('/')[0].replace(',', '.');
-
-        const course = {
+        const formatedCourse = {
           name: name,
           properties: properties,
           price: price,
         };
 
-        courses.push(course);
+        // Push the formated courses to the array
+        formatedDay.courses.push(formatedCourse);
       });
-      return courses;
-    }
+      menu.push(formatedDay);
+    });
+    return menu;
   } catch (error) {
+    console.log(error);
     return [];
   }
 };
