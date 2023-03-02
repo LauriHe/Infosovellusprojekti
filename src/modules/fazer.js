@@ -5,7 +5,7 @@
  */
 
 /**
- * Takes the weekly menu from Fazer API and returns a formated menu
+ * Takes the daily menu from Fazer API and returns a formated array of courses
  *
  * @param {string} lang - Desired language
  * @returns Array of courses
@@ -13,115 +13,91 @@
 
 import {doFetch} from './network';
 
-const getFazerMenu = async (campusIndex, lang) => {
+const getFazerCourses = async (campus, lang) => {
+  // Arrays to store the courses
+  let fazerCoursesfi = [];
+  let fazerCoursesen = [];
   try {
-    // Fetch the weekly menu from Sodexo API
-    const MenuFi = await doFetch(
-      `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campusIndex}&language=fi`,
+    // Fetch the daily menu from Sodexo API
+    const menuFi = await doFetch(
+      `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campus}&language=fi`,
       true
     );
+    // Push the courses to the array
+    Object.entries(menuFi.MenusForDays[0].SetMenus).forEach((menu) => {
+      fazerCoursesfi.push(menu[1]);
+    });
 
-    // Fetch the weekly menu from Sodexo API
-    const MenuEn = await doFetch(
-      `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campusIndex}&language=en`,
+    // Fetch the daily menu from Sodexo API
+    const menuEn = await doFetch(
+      `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campus}&language=en`,
       true
     );
+    // Push the courses to the array
+    Object.entries(menuEn.MenusForDays[0].SetMenus).forEach((menu) => {
+      fazerCoursesen.push(menu[1]);
+    });
 
-    console.log(MenuFi);
-
-    let fazerMenu = [];
-
+    // Array to store the formated courses
+    const courses = [];
     if (lang === 'en') {
-      Object.entries(MenuEn.MenusForDays).forEach((menu) => {
-        fazerMenu.push(menu[1].SetMenus);
-      });
-    } else {
-      Object.entries(MenuFi.MenusForDays).forEach((menu) => {
-        fazerMenu.push(menu[1].SetMenus);
-      });
-    }
-
-    fazerMenu = fazerMenu.slice(0, 5);
-
-    const menu = [];
-    let dayIndex = 0;
-
-    console.log(fazerMenu);
-
-    // Loop through each day
-    fazerMenu.forEach((day) => {
-      // Array to store the formated courses
-      const formatedDay = {
-        date: 0,
-        courses: [],
-      };
-
-      switch (dayIndex) {
-        case 0:
-          lang === 'en'
-            ? (formatedDay.date = 'Monday')
-            : (formatedDay.date = 'Maanantai');
-          break;
-        case 1:
-          lang === 'en'
-            ? (formatedDay.date = 'Tuesday')
-            : (formatedDay.date = 'Tiistai');
-          break;
-        case 2:
-          lang === 'en'
-            ? (formatedDay.date = 'Wednesday')
-            : (formatedDay.date = 'Keskiviikko');
-          break;
-        case 3:
-          lang === 'en'
-            ? (formatedDay.date = 'Thursday')
-            : (formatedDay.date = 'Torstai');
-          break;
-        case 4:
-          lang === 'en'
-            ? (formatedDay.date = 'Friday')
-            : (formatedDay.date = 'Perjantai');
-          break;
-        default:
-          break;
-      }
-
-      dayIndex++;
-
-      console.log(day);
-
-      //let courseIndex = 0;
-      // Format each days courses
-      day.forEach((course) => {
-        //courseIndex++;
+      // Loop through courses and format them
+      for (let i = 0; i < fazerCoursesen.length; i++) {
         // Store the needed data
-        const name = course.Components[0].split(' (')[0];
-        const properties = '(' + course.Components[0].split(' (')[1] + '(';
-        let price;
-        if (lang === 'en') {
-          price = course.Price;
-        } else {
-          price = course.Price;
+
+        let courseName = fazerCoursesen[i].Components[0].split(' (')[0];
+        for (let j = 1; j < fazerCoursesen[i].Components.length; j++) {
+          if (fazerCoursesen[i].Components[j] == undefined) {
+            break;
+          }
+          courseName += ', ' + fazerCoursesen[i].Components[j].split(' (')[0];
         }
-        //console.log(MenuFi);
+        const properties = fazerCoursesen[i].Components[0]
+          .split(' (')[1]
+          .split(')')[0];
+        let price = fazerCoursesfi[i].Price.split('/');
+        price = price[0] + '€ | ' + price[1] + '€ | ' + price[2] + '€';
 
         // Create a course object and use the stored data
-        const formatedCourse = {
-          name: name,
+        const course = {
+          name: courseName,
+          properties: properties,
+          price: price,
+        };
+        // Push the course to the array
+        courses.push(course);
+      }
+      return courses;
+    } else {
+      // Same as above but with Finnish data
+      fazerCoursesfi.forEach((fazerCourse) => {
+        let courseName = fazerCourse.Components[0].split(' (')[0];
+        for (let i = 1; i < fazerCourse.Components.length; i++) {
+          if (fazerCourse.Components[i] == undefined) {
+            break;
+          }
+          courseName += ', ' + fazerCourse.Components[i].split(' (')[0];
+        }
+        const properties = fazerCourse.Components[0]
+          .split(' (')[1]
+          .split(')')[0];
+        let price = fazerCourse.Price.split('/');
+        price = price[0] + '€ | ' + price[1] + '€ | ' + price[2] + '€';
+
+        const course = {
+          name: courseName,
           properties: properties,
           price: price,
         };
 
-        // Push the formated courses to the array
-        formatedDay.courses.push(formatedCourse);
+        courses.push(course);
       });
-      menu.push(formatedDay);
-    });
-    return menu;
+      return courses;
+    }
   } catch (error) {
     console.log(error);
     return [];
   }
 };
 
-export default getFazerMenu;
+export default getFazerCourses;

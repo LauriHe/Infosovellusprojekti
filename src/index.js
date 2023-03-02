@@ -3,60 +3,42 @@ import registerSW from './modules/serviceWorker';
 import resizeBackground from './modules/backgroundResizer';
 import getFazerMenu from './modules/fazer';
 import getSodexoMenu from './modules/sodexo';
-import {doFetch, getWeekdayIndex} from './modules/network';
+import {doFetch} from './modules/network';
 import campuses from './modules/campuses';
+import getWeekDay from './modules/weekday';
 
 let lang;
 let activeCampus;
 
-const getLunchMenu = async (menuType) => {
+const getLunchMenu = async () => {
   const menu =
     campuses[activeCampus].restaurant === 'fazer'
       ? await getFazerMenu(campuses[activeCampus].index, lang)
       : await getSodexoMenu(campuses[activeCampus].index, lang);
-  if (menuType === 'weekly') {
-    return menu;
-  } else {
-    const weekDay = getWeekdayIndex();
-    return menu[weekDay];
-  }
+  return menu;
 };
 
-const renderCards = async (menuType, menu, cardContainer, background) => {
-  cardContainer.classList.remove('weekly-container');
-  cardContainer.classList.remove('daily-container');
-  cardContainer.classList.add(menuType + '-container');
-
-  menu.forEach((day) => {
+const renderCards = async (menu, cardContainer, background) => {
+  menu.forEach((course) => {
     const card = document.createElement('div');
     card.classList.add('card');
-    card.classList.add(menuType + '-card');
 
-    if (menuType === 'weekly') {
-      const date = document.createElement('h3');
-      date.innerHTML = day.date;
-      card.appendChild(date);
-    }
+    const courseName = document.createElement('p');
+    courseName.innerHTML = course.name;
 
-    Object.entries(day.courses).forEach((course) => {
-      const courseName = document.createElement('p');
-      courseName.innerHTML = course[1].name;
+    const courseProperties = document.createElement('p');
+    courseProperties.innerHTML = course.properties;
 
-      const courseProperties = document.createElement('p');
-      courseProperties.innerHTML = course[1].properties;
+    const coursePrice = document.createElement('p');
+    coursePrice.innerHTML = course.price;
 
-      const coursePrice = document.createElement('p');
-      coursePrice.innerHTML = course[1].price;
+    const propertiesAndPrice = document.createElement('div');
+    propertiesAndPrice.classList.add('properties-and-price');
+    propertiesAndPrice.appendChild(courseProperties);
+    propertiesAndPrice.appendChild(coursePrice);
 
-      const div = document.createElement('div');
-
-      div.appendChild(courseName);
-      div.appendChild(courseProperties);
-      div.appendChild(coursePrice);
-
-      card.appendChild(div);
-    });
-
+    card.appendChild(courseName);
+    card.appendChild(propertiesAndPrice);
     cardContainer.appendChild(card);
   });
   resizeBackground(background);
@@ -84,9 +66,13 @@ const initializeLunchPage = async () => {
   // Resize background when window is resized
   onresize = () => resizeBackground(background);
 
+  const weekDay = getWeekDay(lang);
+
   const heading = document.createElement('h1');
-  // eslint-disable-next-line quotes
-  heading.innerHTML = lang === 'en' ? "this week's menu" : 'Viikon ruokalista';
+
+  heading.innerHTML =
+    // eslint-disable-next-line quotes
+    lang === 'en' ? weekDay + "'s menu" : weekDay + 'n ruokalista';
 
   const cardContainer = document.createElement('div');
   cardContainer.classList.add('card-container');
@@ -95,30 +81,9 @@ const initializeLunchPage = async () => {
   body.appendChild(heading);
   body.appendChild(cardContainer);
 
-  const weeklyMenu = await getLunchMenu('weekly');
-  //const dailyMenu = await getLunchMenu('daily');
+  const dailyMenu = await getLunchMenu();
 
-  /*let intervalIndex = 1;
-  renderCards('weekly', weeklyMenu, cardContainer, background);
-  setInterval(() => {
-    cardContainer.innerHTML = '';
-    if (intervalIndex === 0) {
-      heading.innerHTML =
-        // eslint-disable-next-line quotes
-        lang === 'en' ? "this week's menu" : 'Viikon ruokalista';
-      renderCards('weekly', weeklyMenu, cardContainer, background);
-      intervalIndex = 1;
-    } else {
-      heading.innerHTML =
-        lang === 'en'
-          ? // eslint-disable-next-line quotes
-            dailyMenu.date + "'s menu"
-          : dailyMenu.date + 'n ruokalista';
-      renderCards('daily', [dailyMenu], cardContainer, background);
-      intervalIndex = 0;
-    }
-  }, 5000);*/
-  renderCards('weekly', weeklyMenu, cardContainer, background);
+  renderCards(dailyMenu, cardContainer, background);
 };
 
 initializeLunchPage();
