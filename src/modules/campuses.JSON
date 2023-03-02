@@ -1,18 +1,22 @@
 {
   "arabia": {
     "restaurant": "fazer",
-    "index": "1251"
+    "index": "1251",
+    "location": "60.209765,24.976304"
   },
   "karamalmi": {
     "restaurant": "fazer",
-    "index": "3208"
+    "index": "3208",
+    "location": "60.224051,24.758132"
   },
   "myllypuro": {
     "restaurant": "sodexo",
-    "index": "158"
+    "index": "158",
+    "location": "60.223599,25.078367"
   },
   "myyrmaki": {
     "restaurant": "sodexo",
-    "index": "152"
+    "index": "152",
+    "location": "60.258690,24.844279"
   }
 }

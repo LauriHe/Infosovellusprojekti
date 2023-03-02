@@ -1,5 +1,23 @@
 {
   "lang": "fi",
   "campus": "myllypuro",
-  "searchRadius": "500"
+  "searchRadius": "500",
+  "slidesInterval": 3,
+
+  "pages": {
+    "0": {
+      "name": "slides",
+      "pageDuration": 18,
+      "slideDuration": 3
+    },
+    "1": {
+      "name": "lunch",
+      "pageDuration": 10
+    },
+    "2": {
+      "name": "hsl",
+      "pageDuration": 15,
+      "stopDuration": 5
+    }
+  }
 }

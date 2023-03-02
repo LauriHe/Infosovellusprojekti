@@ -1,0 +1,115 @@
+@use 'base.scss';
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.hsl-background {
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/images/transportationPattern.jpeg);
+  filter: brightness(0.95);
+  background-size: 50em;
+  position: absolute;
+  z-index: -1;
+}
+
+.hsl-heading {
+  margin: 2rem 0;
+  font-size: 4.5em;
+  color: base.$metropolia-orange;
+  background-color: #f2f2f2;
+  box-shadow: 0 0 2rem #f2f2f2;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+}
+
+.hsl-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  height: 80%;
+}
+
+.map-container {
+  width: 60%;
+  position: relative;
+  border-radius: 0em 0.5em 0.5em 0em;
+  overflow: hidden;
+  box-shadow: 0 0 1em #00000035;
+  order: 2;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.mapboxgl-marker {
+  background-image: url('../assets/images/icons8-bus-stop-50.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.hsl-card-container {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  gap: 1em;
+  order: 1;
+
+  .hsl-card {
+    width: 20em;
+    height: 100%;
+    padding: 1em 1em;
+    background-color: #fff;
+    border-radius: 0.5em 0em 0em 0.5em;
+    box-shadow: 0 0 1em #00000035;
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.5em;
+
+    h3 {
+      color: base.$metropolia-orange;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      margin: 1em;
+    }
+    h5 {
+      font-size: 14px;
+    }
+
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-right: 1em;
+    }
+
+    div > p {
+      display: flex;
+    }
+    div > time {
+      margin-bottom: 0.5em;
+      display: flex;
+      color: base.$metropolia-orange;
+    }
+  }
+}
+
+.card-title {
+  color: rgb(255, 123, 0);
+}

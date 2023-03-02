@@ -31,7 +31,6 @@ const getSodexoCourses = async (campus, lang) => {
     const dailyMenu = await doFetch(
       `https://www.sodexo.fi/ruokalistat/output/daily_json/${campus}/${year}-${month}-${day}`
     );
-    console.log(dailyMenu);
     // Push the courses to the array
     Object.entries(dailyMenu.courses).forEach((course) => {
       sodexoCourses.push(course.pop());

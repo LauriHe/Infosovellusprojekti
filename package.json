@@ -17,6 +17,8 @@
     "eslint": "^8.33.0",
     "eslint-webpack-plugin": "^3.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "load-google-maps-api": "^2.0.2",
+    "mapbox-gl": "^2.13.0",
     "node-sass": "^8.0.0",
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",

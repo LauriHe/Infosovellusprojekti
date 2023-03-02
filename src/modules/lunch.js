@@ -1,7 +1,6 @@
 import resizeBackground from './backgroundResizer';
 import getFazerMenu from './fazer';
 import getSodexoMenu from './sodexo';
-import {doFetch} from './network';
 import campuses from './campuses';
 import getWeekDay from './weekday';
 
@@ -19,7 +18,7 @@ const getLunchMenu = async () => {
 const renderCards = async (menu, cardContainer, background) => {
   menu.forEach((course) => {
     const card = document.createElement('div');
-    card.classList.add('card');
+    card.classList.add('lunch-card');
 
     const courseName = document.createElement('p');
     courseName.innerHTML = course.name;
@@ -42,16 +41,8 @@ const renderCards = async (menu, cardContainer, background) => {
   resizeBackground(background);
 };
 
-const getConfig = async () => {
-  /*return await doFetch(
-    'https://users.metropolia.fi/~lauhei/Web-teknologiat-ja-media-alustat/Projekti/dsconfig.JSON'
-  );*/
-  return doFetch('assets/dsconfig.JSON');
-};
-
-const initializeLunchPage = async () => {
+const initializeLunchPage = async (config) => {
   // Get config and set global variables
-  const config = await getConfig();
   lang = config.lang;
   activeCampus = config.campus;
 
@@ -59,7 +50,7 @@ const initializeLunchPage = async () => {
   body.innerHTML = '';
 
   const background = document.createElement('div');
-  background.classList.add('background');
+  background.classList.add('lunch-background');
 
   // Resize background when window is resized
   onresize = () => resizeBackground(background);
@@ -67,13 +58,14 @@ const initializeLunchPage = async () => {
   const weekDay = getWeekDay(lang);
 
   const heading = document.createElement('h1');
+  heading.classList.add('lunch-heading');
 
   heading.innerHTML =
     // eslint-disable-next-line quotes
     lang === 'en' ? weekDay + "'s menu" : weekDay + 'n ruokalista';
 
   const cardContainer = document.createElement('div');
-  cardContainer.classList.add('card-container');
+  cardContainer.classList.add('lunch-card-container');
 
   body.appendChild(background);
   body.appendChild(heading);
