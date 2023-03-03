@@ -46,8 +46,8 @@ const initializeLunchPage = async (config) => {
   lang = config.lang;
   activeCampus = config.campus;
 
-  const body = document.body;
-  body.innerHTML = '';
+  const container = document.querySelector('.container');
+  container.innerHTML = '';
 
   const background = document.createElement('div');
   background.classList.add('lunch-background');
@@ -67,9 +67,9 @@ const initializeLunchPage = async (config) => {
   const cardContainer = document.createElement('div');
   cardContainer.classList.add('lunch-card-container');
 
-  body.appendChild(background);
-  body.appendChild(heading);
-  body.appendChild(cardContainer);
+  container.appendChild(background);
+  container.appendChild(heading);
+  container.appendChild(cardContainer);
 
   const dailyMenu = await getLunchMenu();
 

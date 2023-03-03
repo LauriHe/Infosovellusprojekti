@@ -1,19 +1,19 @@
 import slidePaths from './slidePaths';
 
-const body = document.body;
+const container = document.querySelector('.container');
 
 const displaySlides = async (slideDuration) => {
   const switchInterval = parseInt(slideDuration) * 1000;
 
   let slideIndex = 0;
-  body.innerHTML = '';
+  container.innerHTML = '';
   const slide = document.createElement('div');
   slide.classList.add('slide');
 
   const displaySlide = () => {
     const slidePath = Object.entries(slidePaths)[slideIndex][1];
     slide.style.backgroundImage = `url(${slidePath})`;
-    body.appendChild(slide);
+    container.appendChild(slide);
   };
 
   displaySlide();

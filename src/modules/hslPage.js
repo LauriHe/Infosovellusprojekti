@@ -6,7 +6,6 @@ import {renderMap, addMarker, deleteMarkers} from './map';
 let activeCampus;
 let searchRadius;
 let activeCoords;
-let stopInterval;
 
 // render data to page
 const renderData = async (mapElement, cardContainer, background) => {
@@ -111,19 +110,13 @@ const renderData = async (mapElement, cardContainer, background) => {
 
   // render first stop and start interval to render next stops
   renderStop();
-  setInterval(renderStop, stopInterval);
 };
 
 // set variables and create nessesary html elements
-const initializeHSLPage = async (config, stopDuration) => {
+const initializeHSLPage = async (config) => {
   // get config and set global variables
   activeCampus = config.campus;
   searchRadius = config.searchRadius;
-  stopInterval = parseInt(stopDuration) * 1000;
-
-  // temporary values for testing
-  activeCampus = 'karamalmi';
-  searchRadius = 500;
 
   // get coordinates for active campus from campuses.JSON
   activeCoords = [
@@ -131,8 +124,8 @@ const initializeHSLPage = async (config, stopDuration) => {
     campuses[activeCampus].location.split(',')[1],
   ];
 
-  const body = document.body;
-  body.innerHTML = '';
+  const container = document.querySelector('.container');
+  container.innerHTML = '';
 
   const background = document.createElement('div');
   background.classList.add('hsl-background');
@@ -163,9 +156,9 @@ const initializeHSLPage = async (config, stopDuration) => {
   main.appendChild(mapContainer);
   main.appendChild(cardContainer);
 
-  body.appendChild(background);
-  body.appendChild(heading);
-  body.appendChild(main);
+  container.appendChild(background);
+  container.appendChild(heading);
+  container.appendChild(main);
 
   renderData(mapElement, cardContainer, background);
 };

@@ -2,3 +2,12 @@
 @use 'lunch.scss';
 @use 'hsl.scss';
 @use 'slides.scss';
+@use 'navbar.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+  padding-bottom: 4rem;
+}
