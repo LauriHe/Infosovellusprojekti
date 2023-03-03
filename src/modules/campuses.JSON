@@ -35,11 +35,27 @@
   "myllypuro": {
     "restaurant": "sodexo",
     "index": "158",
-    "location": "60.223599,25.078367"
+    "location": "60.223599,25.078367",
+    "room": {
+      "0": "MPB6801",
+      "1": "MPD2013",
+      "2": "MPB6502",
+      "3": "MPA1803",
+      "4": "MPA1804"
+    }
   },
   "myyrmaki": {
     "restaurant": "sodexo",
     "index": "152",
-    "location": "60.258690,24.844279"
+    "location": "60.258690,24.844279",
+    "room": {
+      "0": "MMC219",
+      "1": "MMC220",
+      "2": "MMC217",
+      "3": "MMC218",
+      "4": "MMC125.2",
+      "5": "MMC405",
+      "6": "MMC406"
+    }
   }
 }
