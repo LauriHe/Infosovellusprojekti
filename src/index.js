@@ -8,6 +8,7 @@ const initializeNewsPage = async () => {
   body.innerHTML = '';
 
   const background = document.createElement('div');
+  background.id = 'news-Bakcground';
   background.classList.add('background');
 
   // Resize background when window is resized
