@@ -1,8 +1,8 @@
 import './sass/style.scss';
 import registerSW from './modules/serviceWorker';
-import displaySlides from './modules/displaySlides';
 import initializeLunchPage from './modules/lunch';
 import initializeHSLPage from './modules/hslPage';
+import displaySettingsPage from './modules/settingsPage';
 
 let currentPage = 'lunch';
 
@@ -12,23 +12,36 @@ const config = {
   searchRadius: '500',
 };
 
-const displayPage = (page, config) => {
-  switch (page) {
-    case 'slides':
-      displaySlides(page.slideDuration);
-      break;
+const getConfig = () => {
+  const settings = JSON.parse(localStorage.getItem('settings'));
+
+  if (settings) {
+    config.lang = settings.lang;
+    config.campus = settings.campus;
+    config.searchRadius = settings.searchRadius;
+  }
+};
+
+getConfig();
+
+const displayPage = (currentPage) => {
+  getConfig();
+  switch (currentPage) {
     case 'lunch':
       initializeLunchPage(config);
       break;
     case 'hsl':
-      initializeHSLPage(config, page.stopDuration);
+      initializeHSLPage(config);
+      break;
+    case 'settings':
+      displaySettingsPage();
       break;
     default:
       break;
   }
 };
 
-displayPage(currentPage, config);
+displayPage(currentPage);
 
 const createNavbar = () => {
   const body = document.body;
@@ -38,12 +51,14 @@ const createNavbar = () => {
 
   const lunchButton = document.createElement('button');
   lunchButton.classList.add('navbar-button');
-  lunchButton.innerHTML = 'Lounas';
+  const lunchIcon = document.createElement('i');
+  lunchIcon.classList.add('fa-solid', 'fa-utensils');
+  lunchButton.appendChild(lunchIcon);
 
   lunchButton.addEventListener('click', () => {
     if (!(currentPage === 'lunch')) {
       currentPage = 'lunch';
-      displayPage('lunch', config);
+      displayPage('lunch');
     }
   });
 
@@ -52,18 +67,49 @@ const createNavbar = () => {
 
   const hslButton = document.createElement('button');
   hslButton.classList.add('navbar-button');
-  hslButton.innerHTML = 'HSL';
+  const hslIcon = document.createElement('i');
+  hslIcon.classList.add('fa-solid', 'fa-bus-simple');
+  hslButton.appendChild(hslIcon);
 
   hslButton.addEventListener('click', () => {
     if (!(currentPage === 'hsl')) {
       currentPage = 'hsl';
-      displayPage('hsl', config);
+      displayPage('hsl');
     }
+  });
+
+  const divider2 = document.createElement('div');
+  divider2.classList.add('navbar-divider');
+
+  const yleButton = document.createElement('button');
+  yleButton.classList.add('navbar-button');
+  const yleIcon = document.createElement('i');
+  yleIcon.classList.add('fa-solid', 'fa-newspaper');
+  yleButton.appendChild(yleIcon);
+
+  yleButton.addEventListener('click', () => {});
+
+  const divider3 = document.createElement('div');
+  divider3.classList.add('navbar-divider');
+
+  const settingsButton = document.createElement('button');
+  settingsButton.classList.add('navbar-button');
+  const settingsIcon = document.createElement('i');
+  settingsIcon.classList.add('fa-solid', 'fa-gear');
+  settingsButton.appendChild(settingsIcon);
+
+  settingsButton.addEventListener('click', () => {
+    currentPage = 'settings';
+    displayPage('settings');
   });
 
   navbar.appendChild(lunchButton);
   navbar.appendChild(divider);
   navbar.appendChild(hslButton);
+  navbar.appendChild(divider2);
+  navbar.appendChild(yleButton);
+  navbar.appendChild(divider3);
+  navbar.appendChild(settingsButton);
   body.appendChild(navbar);
 };
 
