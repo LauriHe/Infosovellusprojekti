@@ -1,6 +1,10 @@
+import slidePaths from './slidePaths';
+
 const body = document.body;
 
-const displaySlides = (slidePaths, switchInterval) => {
+const displaySlides = async (slideDuration) => {
+  const switchInterval = parseInt(slideDuration) * 1000;
+
   let slideIndex = 0;
   body.innerHTML = '';
   const slide = document.createElement('div');
@@ -11,6 +15,7 @@ const displaySlides = (slidePaths, switchInterval) => {
     slide.style.backgroundImage = `url(${slidePath})`;
     body.appendChild(slide);
   };
+
   displaySlide();
   slideIndex = 1;
 
@@ -18,7 +23,6 @@ const displaySlides = (slidePaths, switchInterval) => {
     displaySlide();
     slideIndex += 1;
     if (slideIndex === Object.keys(slidePaths).length) {
-      slideIndex = 0;
       clearInterval(interval);
     }
   }, switchInterval);

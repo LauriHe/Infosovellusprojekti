@@ -5,7 +5,7 @@
  */
 
 /**
- * Takes the weekly menu from Sodexo API and returns a formated array of courses
+ * Takes the daily menu from Sodexo API and returns a formated array of courses
  *
  * @param {string} lang - Desired language
  * @returns Array of courses
@@ -13,77 +13,50 @@
 
 import {doFetch} from './network';
 
-const getSodexoMenu = async (campusIndex, lang) => {
+const getSodexoCourses = async (campus, lang) => {
+  // Get the current date
+  const year = new Date().getFullYear();
+  let month = new Date().getMonth() + 1;
+  let day = new Date().getDate();
+  if (month < 10) {
+    month = '0' + month;
+  }
+  if (day < 10) {
+    day = '0' + day;
+  }
   // Array to store the courses
-  let sodexoMenu = [];
+  let sodexoCourses = [];
   try {
-    // Fetch the weekly menu from Sodexo API
-    const weeklyMenu = await doFetch(
-      `https://www.sodexo.fi/ruokalistat/output/weekly_json/${campusIndex}`
+    // Fetch the daily menu from Sodexo API
+    const dailyMenu = await doFetch(
+      `https://www.sodexo.fi/ruokalistat/output/daily_json/${campus}/${year}-${month}-${day}`
     );
-
     // Push the courses to the array
-    Object.entries(weeklyMenu.mealdates).forEach((day) => {
-      sodexoMenu.push(day[1]);
+    Object.entries(dailyMenu.courses).forEach((course) => {
+      sodexoCourses.push(course.pop());
     });
-
     // Array to store the formated courses
-    const menu = [];
+    const courses = [];
 
-    // Loop through each day
-    sodexoMenu.forEach((day) => {
-      // Array to store the formated courses
-      const formatedDay = {
-        date: day.date,
-        courses: [],
+    // Same as above but with Finnish data
+    sodexoCourses.forEach((sodexoCourse) => {
+      const name = eval('sodexoCourse.title_' + lang);
+      const properties = sodexoCourse.properties;
+      const price = sodexoCourse.price.split('/').join(' | ');
+
+      const course = {
+        name: name,
+        properties: properties,
+        price: price,
       };
 
-      if (lang === 'en') {
-        switch (day.date) {
-          case 'Maanantai':
-            formatedDay.date = 'Monday';
-            break;
-          case 'Tiistai':
-            formatedDay.date = 'Tuesday';
-            break;
-          case 'Keskiviikko':
-            formatedDay.date = 'Wednesday';
-            break;
-          case 'Torstai':
-            formatedDay.date = 'Thursday';
-            break;
-          case 'Perjantai':
-            formatedDay.date = 'Friday';
-            break;
-          default:
-            break;
-        }
-      }
-
-      // Format each days courses
-      Object.entries(day.courses).forEach((course) => {
-        // Store the needed data
-        const name = eval('course[1].title_' + lang);
-        const properties = course[1].properties;
-        const price = course[1].price;
-
-        // Create a course object and use the stored data
-        const formatedCourse = {
-          name: name,
-          properties: properties,
-          price: price,
-        };
-
-        // Push the formated courses to the array
-        formatedDay.courses.push(formatedCourse);
-      });
-      menu.push(formatedDay);
+      courses.push(course);
     });
-    return menu;
+    return courses;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
 
-export default getSodexoMenu;
+export default getSodexoCourses;
