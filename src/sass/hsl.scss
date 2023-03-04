@@ -6,7 +6,13 @@ body {
   align-items: center;
   font-family: sans-serif;
 }
-
+.shortHand{
+  background-color: base.$metropolia-orange;
+  color: white;
+  border-radius: 0.5em;
+  padding: 2px;
+  font-family: sans-serif;
+}
 .background {
   width: 100%;
   height: 100%;

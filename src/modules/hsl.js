@@ -53,23 +53,23 @@ const getHslStopsByCoords = async (coords, radius) => {
 const getHslScedules = async (stopId) => {
   // GraphQL query
   const data = JSON.stringify({
-    query: `{
-      stop(id: "${stopId}") {
-        name
+    query: `
+      {
+        stop(id: "${stopId}") {
+          name
           stoptimesWithoutPatterns {
-          scheduledArrival
-          realtimeArrival
-          arrivalDelay
-          scheduledDeparture
-          realtimeDeparture
-          departureDelay
-          realtime
-          realtimeState
-          serviceDay
-          headsign
+            scheduledArrival
+            scheduledDeparture
+            headsign
+            trip {
+              route {
+                shortName
+              }
+            }
+          }
         }
       }
-    }`,
+      `,
   });
 
   // fetch Digitransit API
@@ -87,7 +87,7 @@ const getHslScedules = async (stopId) => {
 
   // parse response
   const json = await response.json();
-
+    console.log(json.data.stop.stoptimesWithoutPatterns[0].trip.route.shortName);
   return json.data.stop;
 };
 
