@@ -12,7 +12,7 @@ const renderMap = (mapElement, activeCoords) => {
     container: mapElement,
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [activeCoords[1], activeCoords[0]],
-    zoom: 15,
+    zoom: 14,
   });
 };
 
@@ -23,10 +23,11 @@ const deleteMarkers = () => {
   });
 };
 
-const addMarker = (coords) => {
+const addMarker = (coords, classy) => {
   const marker = new mapboxgl.Marker()
     .setLngLat([coords[1], coords[0]])
     .addTo(map);
 };
+
 
 export {renderMap, deleteMarkers, addMarker};
