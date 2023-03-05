@@ -35,6 +35,7 @@ body {
   height: 80%;
 }
 
+
 .map-container {
   width: 60%;
   position: relative;
@@ -50,13 +51,23 @@ body {
   bottom: 0;
   width: 100%;
 }
-.mapboxgl-marker {
+.mapboxgl-canvas-container > :nth-child(2) {
   background-image: url('../assets/images/icons8-bus-stop-50.png');
   background-size: cover;
   width: 50px;
   height: 50px;
   cursor: pointer;
 }
+.mapboxgl-canvas-container > :nth-child(2) > svg {
+  display: none;
+}
+
+.mapboxgl-canvas-container > :last-child{
+  filter: invert(40%) sepia(74%) saturate(4871%) hue-rotate(5deg) brightness(106%) contrast(104%);;
+  cursor: pointer;
+}
+
+
 
 .hsl-card-container {
   width: fit-content;
@@ -101,6 +112,7 @@ body {
 
     div > p {
       display: flex;
+      height: fit-content;
     }
     div > time {
       margin-bottom: 0.5em;
@@ -112,4 +124,12 @@ body {
 
 .card-title {
   color: rgb(255, 123, 0);
+}
+
+.shortHand{
+  background-color: base.$metropolia-orange;
+  color: white;
+  border-radius: 0.5em;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+  
 }

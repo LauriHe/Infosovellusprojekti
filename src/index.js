@@ -37,7 +37,7 @@ const displayPages = async () => {
       default:
         break;
     }
-      setTimeout(
+      /* setTimeout(
       () => displayPage(pages[i]),
       parseInt(pages[i].pageDuration * 1000)
     );
@@ -45,7 +45,7 @@ const displayPages = async () => {
       i++;
     } else {
       i = 0;
-    } 
+    }  */
   }; 
 
   displayPage(pages[i]);

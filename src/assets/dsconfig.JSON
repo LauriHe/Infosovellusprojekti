@@ -6,7 +6,7 @@
 
   "pages": {
     
-    "0": {
+    "4": {
       "name": "campus",
       "pageDuration": 3 
     },
@@ -24,7 +24,7 @@
       "name": "lunch",
       "pageDuration": 10
     },
-    "4": {
+    "0": {
       "name": "hsl",
       "pageDuration": 15,
       "stopDuration": 5
