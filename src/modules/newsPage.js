@@ -13,7 +13,7 @@ const initializeNewsPage = async (newsTime) => {
 
   //Creates arrays with pages numbers and headings
   for (let i = 5; i < newsKotimaaHeadings.length - 2; i++) {
-    if (!(newsKotimaaHeadings[i].Text == undefined)) {
+    if (!(newsKotimaaHeadings[i].Text == undefined) && newsPageNumbers.length < 7) {
       newsPageNumbers.push(newsKotimaaHeadings[i].Text.split(' ')[1]);
       newsPageHeadings.push(
         newsKotimaaHeadings[i].Text.substring(
