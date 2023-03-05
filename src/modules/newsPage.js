@@ -1,9 +1,7 @@
-import './sass/style.scss';
-import registerSW from './modules/serviceWorker';
-import resizeBackground from './modules/backgroundResizer';
-import getNews from './modules/getNews';
+import resizeBackground from './backgroundResizer';
+import getNews from './getNews';
 
-const initializeNewsPage = async () => {
+const initializeNewsPage = async (newsTime) => {
   //News headlines and articles for Kotimaa news
   const newsKotimaa = await getNews(102);
   const newsKotimaaHeadings =
@@ -113,10 +111,7 @@ const initializeNewsPage = async () => {
   body.appendChild(heading);
   body.appendChild(main);
 
-  setInterval(await changeArticle, 10000);
+  setInterval(await changeArticle, newsTime*1000);
 };
 
-initializeNewsPage();
-
-// register service worker
-registerSW();
+export default initializeNewsPage;

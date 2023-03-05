@@ -4,6 +4,7 @@ import getConfig from './modules/getConfig';
 import displaySlides from './modules/displaySlides';
 import initializeLunchPage from './modules/lunch';
 import initializeHSLPage from './modules/hslPage';
+import initializeNewsPage from './modules/newsPage';
 import displayCampus from './modules/displayCampus';
 import customSlide from './modules/customSlide';
 
@@ -33,11 +34,15 @@ const displayPages = async () => {
         initializeHSLPage(config, page.stopDuration);
         console.log('hsl');
         break;
+      case 'news':
+        initializeNewsPage(page.newsTime);
+        console.log('news');
+        break;
 
       default:
         break;
     }
-      /* setTimeout(
+    setTimeout(
       () => displayPage(pages[i]),
       parseInt(pages[i].pageDuration * 1000)
     );
@@ -45,7 +50,7 @@ const displayPages = async () => {
       i++;
     } else {
       i = 0;
-    }  */
+    }
   };
 
   displayPage(pages[i]);

@@ -5,15 +5,15 @@
   "slidesInterval": 3,
 
   "pages": {
-    
-    "4": {
+
+    "0": {
       "name": "campus",
-      "pageDuration": 3 
+      "pageDuration": 3
     },
     "1": {
       "name": "custom",
       "pageDuration": 3,
-      "imageSource": "./assets/images/original.png" 
+      "imageSource": "./assets/images/original.png"
     },
     "2": {
       "name": "slides",
@@ -24,11 +24,16 @@
       "name": "lunch",
       "pageDuration": 10
     },
-    "0": {
+    "4": {
       "name": "hsl",
       "pageDuration": 15,
       "stopDuration": 5
+    },
+    "5": {
+      "name": "news",
+      "pageDuration": 20,
+      "newsTime": 8
     }
-    
+
   }
 }
