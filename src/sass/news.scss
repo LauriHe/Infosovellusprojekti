@@ -42,18 +42,18 @@ main{
 .containerCenter{
   width: 80%;
   margin: auto;
-  padding-top: 5vh;
+  padding-top: 2.5em;
 }
 
-#headingLines{
+.headingLines{
   font-family: 'Roboto-slab';
   font-size: 1.5em;
-  padding: 12px;
+  padding: 0.6em;
   border-bottom: 1px dashed base.$yle-blue;
 }
 
 #articleLines{
   font-family: 'Roboto-slab';
   font-size: 1.3em;
-  padding-bottom: 5px;
+  padding-bottom: 0.5rem;
 }
