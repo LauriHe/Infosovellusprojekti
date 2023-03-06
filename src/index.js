@@ -12,7 +12,7 @@ const displayPages = async () => {
   const config = await getConfig();
   const pages = config.pages;
 
-  let i = 0;
+  let i = 4;
 
   const displayPage = (page) => {
     switch (page.name) {
@@ -42,7 +42,7 @@ const displayPages = async () => {
       default:
         break;
     }
-    setTimeout(
+/*     setTimeout(
        () => displayPage(pages[i]),
        parseInt(pages[i].pageDuration * 1000)
      );
@@ -50,7 +50,7 @@ const displayPages = async () => {
        i++;
      } else {
        i = 0;
-     }
+     } */
   };
 
   displayPage(pages[i]);
