@@ -1,8 +1,8 @@
 {
-  "slide1": "../assets/images/slides/slide1.webp",
-  "slide2": "../assets/images/slides/slide2.webp",
-  "slide3": "../assets/images/slides/slide3.webp",
-  "slide4": "../assets/images/slides/slide4.webp",
-  "slide5": "../assets/images/slides/slide5.webp",
-  "slide6": "../assets/images/slides/slide6.webp"
+  "slide1": "./assets/images/slides/slide1.webp",
+  "slide2": "./assets/images/slides/slide2.webp",
+  "slide3": "./assets/images/slides/slide3.webp",
+  "slide4": "./assets/images/slides/slide4.webp",
+  "slide5": "./assets/images/slides/slide5.webp",
+  "slide6": "./assets/images/slides/slide6.webp"
 }

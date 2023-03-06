@@ -12,7 +12,7 @@ const displayPages = async () => {
   const config = await getConfig();
   const pages = config.pages;
 
-  let i = 0;
+  let i = 3;
 
   const displayPage = (page) => {
     switch (page.name) {
