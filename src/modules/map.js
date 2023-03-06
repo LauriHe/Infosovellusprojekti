@@ -12,7 +12,7 @@ const renderMap = (mapElement, activeCoords) => {
     container: mapElement,
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [activeCoords[1], activeCoords[0]],
-    zoom: 14,
+    zoom: 15,
   });
 };
 

@@ -5,3 +5,10 @@
 @use 'slides.scss';
 @use 'campus.scss';
 @use 'custom.scss';
+
+body{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Roboto-slab';
+}

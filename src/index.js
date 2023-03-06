@@ -42,15 +42,15 @@ const displayPages = async () => {
       default:
         break;
     }
-    setTimeout(
-      () => displayPage(pages[i]),
-      parseInt(pages[i].pageDuration * 1000)
-    );
-    if (i < Object.entries(pages).length - 1) {
-      i++;
-    } else {
-      i = 0;
-    }
+    /*     setTimeout(
+       () => displayPage(pages[i]),
+       parseInt(pages[i].pageDuration * 1000)
+     );
+     if (i < Object.entries(pages).length - 1) {
+       i++;
+     } else {
+       i = 0;
+     } */
   };
 
   displayPage(pages[i]);

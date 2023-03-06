@@ -2,6 +2,7 @@
 const displayCampus = (campus, lang) => {
     const body = document.body;
     body.innerHTML = '';
+    body.classList.add('body-container');
 
     const heading = document.createElement('h1');
     heading.classList.add('campus-heading');
