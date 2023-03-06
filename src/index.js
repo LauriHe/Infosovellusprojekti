@@ -12,7 +12,7 @@ const displayPages = async () => {
   const config = await getConfig();
   const pages = config.pages;
 
-  let i = 3;
+  let i = 0;
 
   const displayPage = (page) => {
     switch (page.name) {
@@ -35,22 +35,22 @@ const displayPages = async () => {
         console.log('hsl');
         break;
       case 'news':
-        initializeNewsPage(page.newsTime);
+        initializeNewsPage(page.newsTime, page.pageDuration);
         console.log('news');
         break;
 
       default:
         break;
     }
-    /*     setTimeout(
-       () => displayPage(pages[i]),
-       parseInt(pages[i].pageDuration * 1000)
-     );
-     if (i < Object.entries(pages).length - 1) {
-       i++;
-     } else {
-       i = 0;
-     } */
+    setTimeout(
+      () => displayPage(pages[i]),
+      parseInt(pages[i].pageDuration * 1000)
+    );
+    if (i < Object.entries(pages).length - 1) {
+      i++;
+    } else {
+      i = 0;
+    }
   };
 
   displayPage(pages[i]);

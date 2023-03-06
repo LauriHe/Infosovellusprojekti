@@ -57,11 +57,11 @@ const renderData = async (mapElement, cardContainer, background) => {
         const headsign = document.createElement('h5');
         headsign.innerHTML = `${schedule[1].headsign}:`;
         // format scheduled arrival time
-        
+
         // create p element for scheduled arrival time
         const div2 = document.createElement('div');
         const shortHandNum = document.createElement('p');
-        shortHandNum.innerHTML = schedule[1].trip.route.shortName ;
+        shortHandNum.innerHTML = schedule[1].trip.route.shortName;
         shortHandNum.classList.add('shortHand');
 
         // format scheduled departure time
@@ -80,7 +80,7 @@ const renderData = async (mapElement, cardContainer, background) => {
         // append elements to div
 
         div2.appendChild(shortHandNum);
-        
+
         div2.appendChild(scheduledDeparture);
         div2.appendChild(scheduledDeparture2);
 
@@ -115,10 +115,6 @@ const initializeHSLPage = async (config, stopDuration) => {
   activeCampus = config.campus;
   searchRadius = config.searchRadius;
   stopInterval = parseInt(stopDuration) * 1000;
-
-  // temporary values for testing
-  activeCampus = 'karamalmi';
-  searchRadius = 500;
 
   // get coordinates for active campus from campuses.JSON
   activeCoords = [

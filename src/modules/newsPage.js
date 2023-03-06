@@ -1,9 +1,10 @@
 import resizeBackground from './backgroundResizer';
 import getNews from './getNews';
 
-const initializeNewsPage = async (newsTime) => {
+const initializeNewsPage = async (newsTime, pageTime) => {
   //News headlines and articles for Kotimaa news
   const newsKotimaa = await getNews(102);
+
   const newsKotimaaHeadings =
     newsKotimaa.teletext.page.subpage[0].content[0].line;
 
@@ -13,14 +14,19 @@ const initializeNewsPage = async (newsTime) => {
 
   //Creates arrays with pages numbers and headings
   for (let i = 5; i < newsKotimaaHeadings.length - 2; i++) {
-    if (!(newsKotimaaHeadings[i].Text == undefined) && newsPageNumbers.length < 7) {
-      newsPageNumbers.push(newsKotimaaHeadings[i].Text.split(' ')[1]);
-      newsPageHeadings.push(
-        newsKotimaaHeadings[i].Text.substring(
-          5,
-          newsKotimaaHeadings[i].Text.length
-        )
-      );
+    if (
+      !(newsKotimaaHeadings[i].Text == undefined) &&
+      newsPageNumbers.length < 7
+    ) {
+      if (!isNaN(parseInt(newsKotimaaHeadings[i].Text.split(' ')[1]))) {
+        newsPageNumbers.push(newsKotimaaHeadings[i].Text.split(' ')[1]);
+        newsPageHeadings.push(
+          newsKotimaaHeadings[i].Text.substring(
+            5,
+            newsKotimaaHeadings[i].Text.length
+          )
+        );
+      }
     }
   }
 
@@ -37,7 +43,13 @@ const initializeNewsPage = async (newsTime) => {
 
   //creates articles to the right column
   const articleContainer = document.createElement('div');
+
   let numberi = 0;
+
+  const sessionNumberi = sessionStorage.getItem('ylePage');
+  if (sessionNumberi) {
+    numberi = sessionNumberi;
+  }
 
   const changeArticle = async () => {
     if (numberi == newsPageNumbers.length) {
@@ -65,7 +77,6 @@ const initializeNewsPage = async (newsTime) => {
       articleContainer.appendChild(newsArticleLine);
     });
     headingContainer = document.querySelectorAll('.headingLines');
-    console.log(headingContainer);
     headingContainer.forEach((heading) => {
       heading.style.color = 'black';
     });
@@ -111,7 +122,11 @@ const initializeNewsPage = async (newsTime) => {
   body.appendChild(heading);
   body.appendChild(main);
 
-  setInterval(await changeArticle, newsTime*1000);
+  const interval = setInterval(await changeArticle, newsTime * 1000);
+  setTimeout(() => {
+    clearInterval(interval);
+    sessionStorage.setItem('ylePage', numberi);
+  }, pageTime * 1000);
 };
 
 export default initializeNewsPage;
