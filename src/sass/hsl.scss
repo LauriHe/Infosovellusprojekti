@@ -18,13 +18,14 @@ body {
 }
 
 .hsl-heading {
+  width: 100%;
   margin: 2rem 0;
   font-size: 4.5em;
-  color: base.$metropolia-orange;
-  background-color: #f2f2f2;
+  color: base.$white;
+  background-color: base.$hsl-blue;
   box-shadow: 0 0 2rem #f2f2f2;
   padding: 0 0.5rem;
-  border-radius: 1rem;
+  text-align: center;
 }
 
 .hsl-main {
@@ -63,7 +64,6 @@ body {
 }
 
 .mapboxgl-canvas-container > :last-child{
-  filter: invert(40%) sepia(74%) saturate(4871%) hue-rotate(5deg) brightness(106%) contrast(104%);;
   cursor: pointer;
 }
 
@@ -92,7 +92,7 @@ body {
     gap: 1.5em;
 
     h3 {
-      color: base.$metropolia-orange;
+      color: base.$hsl-blue;
       display: flex;
       flex-direction: column;
       justify-content: start;
@@ -117,7 +117,7 @@ body {
     div > time {
       margin-bottom: 0.5em;
       display: flex;
-      color: base.$metropolia-orange;
+      color: base.$hsl-blue;
     }
   }
 }
@@ -127,9 +127,9 @@ body {
 }
 
 .shortHand{
-  background-color: base.$metropolia-orange;
+  background-color: base.$hsl-blue;
   color: white;
   border-radius: 0.5em;
   padding: 0.1em 0.3em 0.1em 0.3em;
-  
+
 }

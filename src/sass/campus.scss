@@ -1,26 +1,16 @@
 @use 'base.scss';
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: roboto-slab;
-    height: 100%;
-    width: 100%;
-  }
-
 .metropoliaLogo{
-    
+
     width: 70%;
-    
+
 }
 
 .campus-heading{
-    
+
     color: base.$metropolia-orange;
     order: 1;
     font-size: 4em;
-    
-    
+
+
 }
