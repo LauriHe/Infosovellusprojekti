@@ -6,6 +6,8 @@ import {renderMap, addMarker, deleteMarkers} from './map';
 let activeCampus;
 let searchRadius;
 let activeCoords;
+let lang;
+
 
 // render data to page
 const renderData = async (mapElement, cardContainer, background) => {
@@ -137,6 +139,7 @@ const initializeHSLPage = async (config) => {
   // get config and set global variables
   activeCampus = config.campus;
   searchRadius = config.searchRadius;
+  lang = config.lang;
 
   // get coordinates for active campus from campuses.JSON
   activeCoords = [
@@ -156,9 +159,10 @@ const initializeHSLPage = async (config) => {
   // Create heading
   const heading = document.createElement('h1');
   heading.classList.add('hsl-heading');
-  heading.innerHTML = `HSL Schedules for ${
-    activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1)
-  }`;
+  heading.innerHTML = lang === 'en' ? `HSL Schedules for ${
+    activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1).replace('yyrmaki', 'yyrmäki')}` : `HSL Aikataulut ${
+      activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1).replace('yyrmaki', 'yyrmäki')}`;
+  
 
   const selectStops = document.createElement('select');
   selectStops.classList.add('hsl-select-stops');

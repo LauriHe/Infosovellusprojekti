@@ -1,9 +1,9 @@
 import resizeBackground from './backgroundResizer';
 import getNews from './getNews';
 
-const initializeNewsPage = async () => {
+const initializeNewsPage = async (config) => {
   let pageNumber = 0;
-
+  const lang = config.lang;
   const sessionPage = sessionStorage.getItem('newsPage');
 
   if (sessionPage) {
@@ -104,7 +104,7 @@ const initializeNewsPage = async () => {
   // Create heading
   const heading = document.createElement('h1');
   heading.id = 'news-header';
-  heading.innerHTML = 'Yle - News';
+  heading.innerHTML = lang === 'en' ? 'Yle - News' : 'Yle - Uutiset';
 
   // Create boxes for News Summaries and articles
   const newsSummaryContainer = document.createElement('div');
