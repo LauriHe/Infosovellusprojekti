@@ -72,16 +72,13 @@ const renderData = async (mapElement, cardContainer, background) => {
         // format scheduled arrival time
         const scheduledArrivalSeconds = new Date(0);
         scheduledArrivalSeconds.setSeconds(schedule[1].scheduledArrival);
-        const scheduledArrivalTime = scheduledArrivalSeconds
-          .toISOString()
-          .substring(11, 16);
+        
 
         // create p element for scheduled arrival time
         const div2 = document.createElement('div');
-        const scheduledArrival = document.createElement('p');
-        scheduledArrival.innerHTML = 'Scheduled arrival: ';
-        const scheduledArrival2 = document.createElement('time');
-        scheduledArrival2.innerHTML = `${scheduledArrivalTime}`;
+        const shortHandNum = document.createElement('p');
+        shortHandNum.innerHTML = schedule[1].trip.route.shortName;
+        shortHandNum.classList.add('shortHand');
 
         // format scheduled departure time
         const scheduledDepartureSeconds = new Date(0);
@@ -98,8 +95,7 @@ const renderData = async (mapElement, cardContainer, background) => {
 
         // append elements to div
 
-        div2.appendChild(scheduledArrival);
-        div2.appendChild(scheduledArrival2);
+        div2.appendChild(shortHandNum);
         div2.appendChild(scheduledDeparture);
         div2.appendChild(scheduledDeparture2);
 
