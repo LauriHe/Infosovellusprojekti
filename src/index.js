@@ -2,6 +2,7 @@ import './sass/style.scss';
 import registerSW from './modules/serviceWorker';
 import initializeLunchPage from './modules/lunch';
 import initializeHSLPage from './modules/hslPage';
+import initializeNewsPage from './modules/newsPage';
 import displaySettingsPage from './modules/settingsPage';
 
 let currentPage = 'lunch';
@@ -32,6 +33,9 @@ const displayPage = (currentPage) => {
       break;
     case 'hsl':
       initializeHSLPage(config);
+      break;
+    case 'news':
+      initializeNewsPage(config);
       break;
     case 'settings':
       displaySettingsPage();
@@ -87,7 +91,12 @@ const createNavbar = () => {
   yleIcon.classList.add('fa-solid', 'fa-newspaper');
   yleButton.appendChild(yleIcon);
 
-  yleButton.addEventListener('click', () => {});
+  yleButton.addEventListener('click', () => {
+    if (!(currentPage === 'news')) {
+      currentPage = 'news';
+      displayPage('news');
+    }
+  });
 
   const divider3 = document.createElement('div');
   divider3.classList.add('navbar-divider');
