@@ -5,7 +5,6 @@
   "slidesInterval": 3,
 
   "pages": {
-
     "0": {
       "name": "campus",
       "pageDuration": 3
@@ -13,7 +12,7 @@
     "1": {
       "name": "custom",
       "pageDuration": 3,
-      "imageSource": "./assets/images/original.png"
+      "imageSource": "./assets/images/tiedote.webp"
     },
     "2": {
       "name": "slides",
@@ -34,6 +33,5 @@
       "pageDuration": 20,
       "newsTime": 8
     }
-
   }
 }
