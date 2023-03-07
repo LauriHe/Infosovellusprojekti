@@ -56,17 +56,15 @@ const getHslScedules = async (stopId) => {
     query: `{
       stop(id: "${stopId}") {
         name
-          stoptimesWithoutPatterns {
+        stoptimesWithoutPatterns {
           scheduledArrival
-          realtimeArrival
-          arrivalDelay
           scheduledDeparture
-          realtimeDeparture
-          departureDelay
-          realtime
-          realtimeState
-          serviceDay
           headsign
+          trip {
+            route {
+              shortName
+            }
+          }
         }
       }
     }`,
