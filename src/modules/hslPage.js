@@ -7,6 +7,7 @@ let activeCampus;
 let searchRadius;
 let activeCoords;
 let stopInterval;
+let pageTime;
 let lang;
 
 // render data to page
@@ -75,7 +76,7 @@ const renderData = async (mapElement, cardContainer, background) => {
         // create p element for scheduled departure time
         const scheduledDeparture = document.createElement('p');
         scheduledDeparture.innerHTML =
-        lang ==='en' ? 'Scheduled departure:' : 'Lähtöaika:';
+          lang === 'en' ? 'Scheduled departure:' : 'Lähtöaika:';
         const scheduledDeparture2 = document.createElement('time');
         scheduledDeparture2.innerHTML = ` ${scheduledDepartureTime}`;
 
@@ -108,15 +109,17 @@ const renderData = async (mapElement, cardContainer, background) => {
 
   // render first stop and start interval to render next stops
   renderStop();
-  setInterval(renderStop, stopInterval);
+  const interval = setInterval(renderStop, stopInterval);
+  setTimeout(() => clearInterval(interval), pageTime * 1000);
 };
 
 // set variables and create nessesary html elements
-const initializeHSLPage = async (config, stopDuration) => {
+const initializeHSLPage = async (config, stopDuration, pageDuration) => {
   lang = config.lang;
   // get config and set global variables
   activeCampus = config.campus;
   searchRadius = config.searchRadius;
+  pageTime = pageDuration;
   stopInterval = parseInt(stopDuration) * 1000;
 
   // get coordinates for active campus from campuses.JSON
@@ -138,11 +141,15 @@ const initializeHSLPage = async (config, stopDuration) => {
   const heading = document.createElement('h1');
   heading.classList.add('hsl-heading');
   heading.innerHTML =
-  lang === 'en' ? `HSL Schedules for ${
-    activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1).replace('yyrmaki', 'yyrmäki')
-  }`: `HSL Aikataulut ${
-    activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1).replace('yyrmaki', 'yyrmäki')
-  }`;
+    lang === 'en'
+      ? `HSL Schedules for ${
+          activeCampus.substring(0, 1).toUpperCase() +
+          activeCampus.substring(1).replace('yyrmaki', 'yyrmäki')
+        }`
+      : `HSL Aikataulut ${
+          activeCampus.substring(0, 1).toUpperCase() +
+          activeCampus.substring(1).replace('yyrmaki', 'yyrmäki')
+        }`;
 
   const mapContainer = document.createElement('div');
   mapContainer.classList.add('map-container');

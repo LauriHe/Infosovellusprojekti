@@ -31,7 +31,7 @@ const displayPages = async () => {
         console.log('lunch');
         break;
       case 'hsl':
-        initializeHSLPage(config, page.stopDuration);
+        initializeHSLPage(config, page.stopDuration, page.pageDuration);
         console.log('hsl');
         break;
       case 'news':
