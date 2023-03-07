@@ -1,7 +1,15 @@
 import resizeBackground from './backgroundResizer';
 import getNews from './getNews';
 
-const initializeNewsPage = async (newsTime, pageTime) => {
+const initializeNewsPage = async () => {
+  let pageNumber = 0;
+
+  const sessionPage = sessionStorage.getItem('newsPage');
+
+  if (sessionPage) {
+    pageNumber = sessionPage;
+  }
+
   //News headlines and articles for Kotimaa news
   const newsKotimaa = await getNews(102);
 
@@ -14,9 +22,7 @@ const initializeNewsPage = async (newsTime, pageTime) => {
 
   //Creates arrays with pages numbers and headings
   for (let i = 5; i < newsKotimaaHeadings.length - 2; i++) {
-    if (
-      !(newsKotimaaHeadings[i].Text == undefined)
-    ) {
+    if (!(newsKotimaaHeadings[i].Text == undefined)) {
       if (!isNaN(parseInt(newsKotimaaHeadings[i].Text.split(' ')[1]))) {
         newsPageNumbers.push(newsKotimaaHeadings[i].Text.split(' ')[1]);
         newsPageHeadings.push(
@@ -33,29 +39,30 @@ const initializeNewsPage = async (newsTime, pageTime) => {
   const newsSummary = document.createElement('select');
   newsSummary.classList = 'selectBar';
 
-  newsPageHeadings.forEach((heading) => {
-    const newHeadingText = document.createElement('option');
-    newHeadingText.classList.add('headingLines');
-    newHeadingText.innerHTML = heading;
-    newsSummary.appendChild(newHeadingText);
+  newsSummary.addEventListener('change', (e) => {
+    pageNumber = e.target.value;
+    sessionStorage.setItem('newsPage', pageNumber);
+    changeArticle();
   });
+
+  for (let j = 0; j < newsPageHeadings.length; j++) {
+    const newHeadingText = document.createElement('option');
+    newHeadingText.value = j;
+    newHeadingText.classList.add('headingLines');
+    newHeadingText.innerHTML = newsPageHeadings[j];
+    newsSummary.appendChild(newHeadingText);
+  }
+
+  if (sessionPage) {
+    console.log(sessionPage);
+    newsSummary.value = sessionPage;
+  }
 
   //creates articles to the right column
   const articleContainer = document.createElement('div');
 
-  let numberi = 0;
-
-  const sessionNumberi = sessionStorage.getItem('ylePage');
-  if (sessionNumberi) {
-    numberi = sessionNumberi;
-  }
-
   const changeArticle = async () => {
-    if (numberi == newsPageNumbers.length) {
-      numberi = 0;
-    }
-
-    const articleArray = await getNews(newsPageNumbers[numberi]);
+    const articleArray = await getNews(newsPageNumbers[pageNumber]);
     const article = articleArray.teletext.page.subpage[0].content[0].line;
     const articleClean = [];
 
@@ -79,8 +86,7 @@ const initializeNewsPage = async (newsTime, pageTime) => {
     headingContainer.forEach((heading) => {
       heading.style.color = 'black';
     });
-    headingContainer[numberi].style.color = '#00b4c8';
-    numberi++;
+    headingContainer[pageNumber].style.color = '#00b4c8';
   };
 
   changeArticle();
@@ -105,7 +111,7 @@ const initializeNewsPage = async (newsTime, pageTime) => {
   const newsSummaryContainer = document.createElement('div');
   newsSummaryContainer.classList.add('newsSummary', 'newsContainer');
 
-/*   const newsArticleContainer = document.createElement('div');
+  /*   const newsArticleContainer = document.createElement('div');
   newsArticleContainer.classList.add('newsArticle', 'newsContainer'); */
 
   //Create main and format the page
@@ -120,17 +126,11 @@ const initializeNewsPage = async (newsTime, pageTime) => {
   newsSummaryContainer.appendChild(articleContainer);
 
   main.appendChild(newsSummaryContainer);
-/*   main.appendChild(newsArticleContainer); */
+  /*   main.appendChild(newsArticleContainer); */
 
   container.appendChild(background);
   container.appendChild(heading);
   container.appendChild(main);
-
-  const interval = setInterval(await changeArticle, newsTime * 1000);
-  setTimeout(() => {
-    clearInterval(interval);
-    sessionStorage.setItem('ylePage', numberi);
-  }, pageTime * 1000);
 };
 
 export default initializeNewsPage;
