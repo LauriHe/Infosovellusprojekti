@@ -54,7 +54,6 @@ const initializeNewsPage = async () => {
   }
 
   if (sessionPage) {
-    console.log(sessionPage);
     newsSummary.value = sessionPage;
   }
 

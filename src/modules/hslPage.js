@@ -16,12 +16,36 @@ const renderData = async (mapElement, cardContainer, background) => {
   // index for stops array
   let stopIndex = 0;
 
+  const sessionStop = sessionStorage.getItem('stopIndex');
+  if (sessionStop) {
+    stopIndex = sessionStop;
+  }
+
   // clear card container
   cardContainer.innerHTML = '';
+
+  const stopContainer = document.createElement('div');
+  stopContainer.classList.add('hsl-stop-container');
 
   // create card
   const stopInfoBox = document.createElement('div');
   stopInfoBox.classList.add('hsl-card');
+
+  const selectStops = document.createElement('select');
+  selectStops.classList.add('hsl-select-stops');
+
+  for (let i = 0; i < stops.length; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.innerHTML = stops[i].name;
+    selectStops.appendChild(option);
+  }
+
+  if (sessionStop) {
+    selectStops.value = sessionStop;
+  }
+
+  stopContainer.appendChild(selectStops);
 
   // render schedule for a stop and update map
   const renderStop = async () => {
@@ -31,23 +55,11 @@ const renderData = async (mapElement, cardContainer, background) => {
     // get stop from stops array
     const stop = stops[stopIndex];
 
-    // increment stop index
-    stopIndex += 1;
-    // if stop index is larger than stops array length, reset stop index
-    if (stopIndex >= stops.length) {
-      stopIndex = 0;
-    }
-
     // get schedules for each stop
     const schedules = await getHslScedules(stop.gtfsId);
 
     // if stop has no schedules, don't create a card
     if (schedules.stoptimesWithoutPatterns.length > 0) {
-      // card heading
-      const heading = document.createElement('h3');
-      heading.innerHTML = stop.name;
-      stopInfoBox.appendChild(heading);
-
       // display arrival and departure times for each schedule
       Object.entries(schedules.stoptimesWithoutPatterns).forEach((schedule) => {
         // create div for each schedule
@@ -95,7 +107,8 @@ const renderData = async (mapElement, cardContainer, background) => {
       });
 
       // append card to card container
-      cardContainer.appendChild(stopInfoBox);
+      stopContainer.appendChild(stopInfoBox);
+      cardContainer.appendChild(stopContainer);
 
       // resize background in case card container is larger than window
       resizeBackground(background);
@@ -103,6 +116,7 @@ const renderData = async (mapElement, cardContainer, background) => {
       // delete markers and add new marker
       deleteMarkers();
       addMarker(stop.coords);
+      addMarker(activeCoords);
     }
   };
   // render map
@@ -110,6 +124,12 @@ const renderData = async (mapElement, cardContainer, background) => {
 
   // render first stop and start interval to render next stops
   renderStop();
+
+  selectStops.addEventListener('change', (e) => {
+    stopIndex = e.target.value;
+    renderStop();
+    sessionStorage.setItem('stopIndex', stopIndex);
+  });
 };
 
 // set variables and create nessesary html elements
@@ -139,6 +159,9 @@ const initializeHSLPage = async (config) => {
   heading.innerHTML = `HSL Schedules for ${
     activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1)
   }`;
+
+  const selectStops = document.createElement('select');
+  selectStops.classList.add('hsl-select-stops');
 
   const mapContainer = document.createElement('div');
   mapContainer.classList.add('map-container');
