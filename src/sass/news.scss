@@ -1,0 +1,74 @@
+@use 'base.scss';
+
+#news-Bakcground {
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/images/newsPattern.jpg);
+  filter: brightness(0.95);
+  background-size: 50em;
+  position: absolute;
+  z-index: -1;
+}
+
+main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 80%;
+}
+
+#news-header{
+  color: base.$white;
+  background-color:base.$yle-blue ;
+  width: 100%;
+  text-align: center;
+  border-radius: 0;
+  margin: 2rem 0;
+  font-size: 4em;
+  box-shadow: 0 0 2rem #f2f2f2;
+  padding: 0 0.5rem;
+  font-family: 'Roboto-slab';
+}
+
+.newsContainer{
+  width: 95%;
+  background-color: base.$white;
+  border: 2px solid base.$black;
+  box-shadow: 0 0 1em #00000035;
+  border-radius:0.5em ;
+  margin: 0.5em;
+}
+
+.containerCenter{
+  width: 85%;
+  margin: auto;
+  padding-top: 1em;
+}
+
+.headingLines{
+  font-family: 'Roboto-slab';
+  font-size: 1.1em;
+  padding-bottom: 5px;
+}
+
+#articleLines{
+  font-family: 'Roboto-slab';
+  font-size: 1em;
+  padding-bottom: 0.5rem;
+}
+
+#articleLines:nth-child(2) {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.selectBar{
+  width: 95%;
+  margin:10px;
+  padding: 1em;
+  font-size: 1em;
+  border: solid 2px base.$yle-blue;
+  border-radius: 0.5em;
+}
