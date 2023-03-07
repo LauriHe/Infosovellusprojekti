@@ -35,7 +35,7 @@ const displayPages = async () => {
         console.log('hsl');
         break;
       case 'news':
-        initializeNewsPage(page.newsTime, page.pageDuration);
+        initializeNewsPage(config.lang, page.newsTime, page.pageDuration);
         console.log('news');
         break;
 
