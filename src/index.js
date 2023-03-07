@@ -34,7 +34,7 @@ const displayPage = (currentPage) => {
       initializeHSLPage(config);
       break;
     case 'settings':
-      displaySettingsPage();
+      displaySettingsPage(config.lang);
       break;
     default:
       break;

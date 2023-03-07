@@ -1,6 +1,14 @@
+@use 'base.scss';
+
+.settings-form{
+  font-family: 'Open-sans';
+}
+
 .settings-heading {
   font-size: 2rem;
   margin: 2rem 0;
+  color: base.$metropolia-orange;
+  font-family: 'Roboto-slab';
 }
 
 .container {
@@ -23,6 +31,8 @@
 .settings-label {
   font-size: 1.5rem;
   margin: 1rem 0;
+  text-align: center;
+  
 }
 
 .settings-select {
@@ -30,18 +40,85 @@
   margin: 1rem 0;
   width: 100%;
   max-width: 500px;
+  border-radius: 0.5em;
+  text-align: center;
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  
+}
+
+option{
+  background-color: white;
+  font-family: 'Open-sans';
+}
+option:active{
+  background-color: base.$metropolia-orange;
+}
+option:focus{
+  background-color: base.$metropolia-orange;
+}
+option:hover{
+  background-color: base.$metropolia-orange;
+}
+select{
+  padding: 0.3em;
 }
 
 .settings-input {
   font-size: 1.5rem;
   margin: 1rem 0;
-  width: 100%;
+  width: 80%;
   max-width: 500px;
+  border-radius: 0.5em;
+  text-align: center;
+  padding: 0.3em;
+  border-style: solid;
+  
 }
+.infobox{
+  display: none;
+}
+input:not(:focus):not(:placeholder-shown):invalid {
+  border-color: red;
+}
+input:not(:focus):not(:placeholder-shown):invalid ~ .error-message {
+  display: block;	
+}
+input:not(:focus):not(:placeholder-shown):invalid ~ .infobox {
+  display: block;	
+}
+input:not(:focus):not(:placeholder-shown):valid {
+  border-color: green;
+}
+input:not(:focus):not(:placeholder-shown):valid ~ .infobox {
+  display: none;
+}
+
 
 .settings-submit-button {
   font-size: 1.5rem;
   margin: 1rem 0;
-  width: 100%;
+  height: 2em;
+  width: 50%;
   max-width: 500px;
+  border-radius: 0.5em;
+  background-color: base.$metropolia-orange;
+  border-color: base.$metropolia-orange;
+  color: white;
+  font-family: 'Roboto-slab';
+}
+
+.settings-submit-button:active{
+  background-color: #a74213;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
 }
