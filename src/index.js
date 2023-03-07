@@ -21,6 +21,10 @@ const getConfig = () => {
     config.campus = settings.campus;
     config.searchRadius = settings.searchRadius;
   }
+
+  if (config.searchRadius === '') {
+    config.searchRadius = 500;
+  }
 };
 
 getConfig();
@@ -38,7 +42,7 @@ const displayPage = (currentPage) => {
       initializeNewsPage(config);
       break;
     case 'settings':
-      displaySettingsPage(config.lang);
+      displaySettingsPage(config);
       break;
     default:
       break;
@@ -61,6 +65,7 @@ const createNavbar = () => {
 
   lunchButton.addEventListener('click', () => {
     if (!(currentPage === 'lunch')) {
+      getConfig();
       currentPage = 'lunch';
       displayPage('lunch');
     }
@@ -77,6 +82,7 @@ const createNavbar = () => {
 
   hslButton.addEventListener('click', () => {
     if (!(currentPage === 'hsl')) {
+      getConfig();
       currentPage = 'hsl';
       displayPage('hsl');
     }
@@ -93,6 +99,7 @@ const createNavbar = () => {
 
   yleButton.addEventListener('click', () => {
     if (!(currentPage === 'news')) {
+      getConfig();
       currentPage = 'news';
       displayPage('news');
     }

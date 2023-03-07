@@ -1,4 +1,7 @@
-const displaySettingsPage = (lang) => {
+const displaySettingsPage = (config) => {
+  const lang = config.lang;
+  const searchRadius = config.searchRadius;
+
   const container = document.querySelector('.container');
   container.innerHTML = '';
 
@@ -51,7 +54,6 @@ const displaySettingsPage = (lang) => {
   langLabelText.classList.add('settings-label-text');
   langLabelText.innerHTML = lang === 'en' ? 'Language' : 'Kieli';
 
-
   const langSelect = document.createElement('select');
   langSelect.classList.add('settings-select');
   langSelect.id = 'lang';
@@ -75,11 +77,14 @@ const displaySettingsPage = (lang) => {
 
   const searchRadiusLabelText = document.createElement('span');
   searchRadiusLabelText.classList.add('settings-label-text');
-  searchRadiusLabelText.innerHTML = lang === 'en' ? 'Bus stop search radius' : 'Pysäkkien haku etäisyys';
+  searchRadiusLabelText.innerHTML =
+    lang === 'en' ? 'Bus stop search radius' : 'Pysäkkien haku etäisyys';
 
   const searchRadiusInput = document.createElement('input');
+  searchRadiusInput.value = searchRadius;
   searchRadiusInput.classList.add('settings-input');
-  searchRadiusInput.placeholder = lang === 'en' ? 'Maximum of 1000 meters' : 'Maksimi 1000 metriä';
+  searchRadiusInput.placeholder =
+    lang === 'en' ? 'Maximum of 1000 meters' : 'Maksimi 1000 metriä';
   searchRadiusInput.id = 'searchRadius';
   searchRadiusInput.type = 'number';
   searchRadiusInput.min = '0';
@@ -92,14 +97,15 @@ const displaySettingsPage = (lang) => {
 
   const infobox = document.createElement('div');
   infobox.classList.add('infobox');
-  infobox.textContent = lang === 'en' ? 'Enter a radius in numbers (meters) to search for nearby bus stops. The maximum radius is 1000 meters.' : 'Syötä säde numeroina (metreinä) etsiäksesi lähellä olevia pysäkkejä. Suurin sallittu arvo on 1000 metriä.';
-  
+  infobox.textContent =
+    lang === 'en'
+      ? 'Enter a radius in numbers (meters) to search for nearby bus stops. The maximum radius is 1000 meters.'
+      : 'Syötä säde numeroina (metreinä) etsiäksesi lähellä olevia pysäkkejä. Suurin sallittu arvo on 1000 metriä.';
 
   const submitButton = document.createElement('button');
   submitButton.classList.add('settings-submit-button');
   submitButton.type = 'submit';
   submitButton.innerHTML = lang === 'en' ? 'Save' : 'Tallenna';
-  
 
   form.appendChild(campusLabel);
   form.appendChild(langLabel);
@@ -123,16 +129,16 @@ const displaySettingsPage = (lang) => {
     const campus = document.querySelector('#campus').value;
     const lang = document.querySelector('#lang').value;
     const searchRadius = document.querySelector('#searchRadius').value;
-	
+
     localStorage.setItem(
       'settings',
       JSON.stringify({
         campus,
         lang,
         searchRadius,
-      }), 
+      })
     );
-    displaySettingsPage(lang);
+    displaySettingsPage(config);
   });
 };
 
