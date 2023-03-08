@@ -1,3 +1,15 @@
+/**
+ * Lunch page functionality
+ *
+ * @module lunch
+ *
+ * @requires module:backgroundResizer
+ * @requires module:fazer
+ * @requires module:sodexo
+ * @requires module:campuses
+ * @requires module:weekday
+ */
+
 import resizeBackground from './backgroundResizer';
 import getFazerMenu from './fazer';
 import getSodexoMenu from './sodexo';
@@ -7,6 +19,12 @@ import getWeekDay from './weekday';
 let lang;
 let activeCampus;
 
+/**
+ * Get lunch menu from Fazer or Sodexo
+ *
+ * @returns {Array} Lunch menu
+ */
+
 const getLunchMenu = async () => {
   const menu =
     campuses[activeCampus].restaurant === 'fazer'
@@ -15,7 +33,18 @@ const getLunchMenu = async () => {
   return menu;
 };
 
+/**
+ *
+ * Render lunch cards to page
+ *
+ * @param {Array} menu
+ * @param {object} cardContainer
+ * @param {object} background
+ */
+
 const renderCards = async (menu, cardContainer, background) => {
+  //Generate dom elements for each lunch course
+  //Add course name, properties and price to the elements
   menu.forEach((course) => {
     const card = document.createElement('div');
     card.classList.add('lunch-card');
@@ -41,6 +70,12 @@ const renderCards = async (menu, cardContainer, background) => {
   resizeBackground(background);
 };
 
+/**
+ * Set global variables and render the basic page structure
+ *
+ * @param {object} config - Configuration data
+ */
+
 const initializeLunchPage = async (config) => {
   // Get config and set global variables
   lang = config.lang;
@@ -59,7 +94,6 @@ const initializeLunchPage = async (config) => {
 
   const heading = document.createElement('h1');
   heading.classList.add('lunch-heading');
-
   heading.innerHTML =
     // eslint-disable-next-line quotes
     lang === 'en' ? weekDay + "'s menu" : weekDay + 'n ruokalista';
@@ -71,6 +105,7 @@ const initializeLunchPage = async (config) => {
   body.appendChild(heading);
   body.appendChild(cardContainer);
 
+  // get lunch menu
   const dailyMenu = await getLunchMenu();
 
   renderCards(dailyMenu, cardContainer, background);

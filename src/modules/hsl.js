@@ -1,4 +1,17 @@
-// get stops for given coordinates and radius
+/**
+ * Gets stops and schedules from Digitransit API
+ *
+ * @module hsl
+ */
+
+/**
+ * Get stops by coordinates and radius
+ *
+ * @param {Array} coords
+ * @param {integer} radius
+ * @returns Stops object
+ */
+
 const getHslStopsByCoords = async (coords, radius) => {
   // GraphQL query
   const data = JSON.stringify({
@@ -48,8 +61,11 @@ const getHslStopsByCoords = async (coords, radius) => {
   return stops;
 };
 
-
-// get next schedules for given stop
+/**
+ *
+ * @param {integer} stopId
+ * @returns Schedules object
+ */
 const getHslScedules = async (stopId) => {
   // GraphQL query
   const data = JSON.stringify({

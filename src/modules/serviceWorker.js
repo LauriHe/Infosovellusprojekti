@@ -1,3 +1,9 @@
+/**
+ * Service Worker registration
+ *
+ * @module serviceWorker
+ */
+
 function registerSW() {
   // eslint-disable-next-line no-undef
   if (APP_CONF.productionMode && 'serviceWorker' in navigator) {

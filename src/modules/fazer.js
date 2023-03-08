@@ -2,11 +2,14 @@
  * Get Fazer courses
  *
  * @module Fazer
+ *
+ * @requires module:network
  */
 
 /**
  * Takes the daily menu from Fazer API and returns a formated array of courses
  *
+ * @param {string} campus - Campus code
  * @param {string} lang - Desired language
  * @returns Array of courses
  */

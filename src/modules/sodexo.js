@@ -1,17 +1,17 @@
 /**
- * Get Sodexo courses
- *
  * @module sodexo
- */
-
-/**
- * Takes the daily menu from Sodexo API and returns a formated array of courses
  *
- * @param {string} lang - Desired language
- * @returns Array of courses
+ * @requires module:network
  */
 
 import {doFetch} from './network';
+
+/**
+ * Takes the daily menu from Sodexo API and returns a formatted array of courses
+ * @param {string} lang - Desired language
+ * @param {string} campus - Campus code
+ * @returns Array of courses
+ */
 
 const getSodexoCourses = async (campus, lang) => {
   // Get the current date
@@ -35,10 +35,10 @@ const getSodexoCourses = async (campus, lang) => {
     Object.entries(dailyMenu.courses).forEach((course) => {
       sodexoCourses.push(course.pop());
     });
-    // Array to store the formated courses
+    // Array to store the formatted courses
     const courses = [];
 
-    // Same as above but with Finnish data
+    // Format the courses
     sodexoCourses.forEach((sodexoCourse) => {
       const name = eval('sodexoCourse.title_' + lang);
       const properties = sodexoCourse.properties;
