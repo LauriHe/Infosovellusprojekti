@@ -1,10 +1,7 @@
 import {doFetch} from './network';
 
+// get config from JSON file
 const getConfig = async () => {
-  /*return await doFetch(
-    'https://users.metropolia.fi/~lauhei/Web-teknologiat-ja-media-alustat/Projekti/dsconfig.JSON',
-    true
-  );*/
   return doFetch('assets/dsconfig.JSON');
 };
 

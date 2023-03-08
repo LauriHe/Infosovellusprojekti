@@ -1,4 +1,6 @@
+// create form for settings page
 const displaySettingsPage = (config) => {
+  // get language and search radius from config
   const lang = config.lang;
   const searchRadius = config.searchRadius;
 
@@ -12,6 +14,7 @@ const displaySettingsPage = (config) => {
   const form = document.createElement('form');
   form.classList.add('settings-form');
 
+  // campus selection
   const campusLabel = document.createElement('label');
   campusLabel.classList.add('settings-label');
 
@@ -47,6 +50,7 @@ const displaySettingsPage = (config) => {
   campusLabel.appendChild(campusLabelText);
   campusLabel.appendChild(campusSelect);
 
+  // language selection
   const langLabel = document.createElement('label');
   langLabel.classList.add('settings-label');
 
@@ -72,6 +76,7 @@ const displaySettingsPage = (config) => {
   langLabel.appendChild(langLabelText);
   langLabel.appendChild(langSelect);
 
+  // search radius selection
   const searchRadiusLabel = document.createElement('label');
   searchRadiusLabel.classList.add('settings-label');
 
@@ -95,6 +100,7 @@ const displaySettingsPage = (config) => {
   searchRadiusLabel.appendChild(searchRadiusLabelText);
   searchRadiusLabel.appendChild(searchRadiusInput);
 
+  // info box to guide the user
   const infobox = document.createElement('div');
   infobox.classList.add('infobox');
   infobox.textContent =
@@ -116,14 +122,17 @@ const displaySettingsPage = (config) => {
   container.appendChild(heading);
   container.appendChild(form);
 
+  // get settings from local storage
   const settings = JSON.parse(localStorage.getItem('settings'));
 
+  // set values to form
   if (settings) {
     document.querySelector('#campus').value = settings.campus;
     document.querySelector('#lang').value = settings.lang;
     document.querySelector('#searchRadius').value = settings.searchRadius;
   }
 
+  // save settings to local storage
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const campus = document.querySelector('#campus').value;
