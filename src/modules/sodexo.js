@@ -41,7 +41,10 @@ const getSodexoCourses = async (campus, lang) => {
     // Format the courses
     sodexoCourses.forEach((sodexoCourse) => {
       const name = eval('sodexoCourse.title_' + lang);
-      const properties = sodexoCourse.properties;
+      let properties = sodexoCourse.properties;
+      if (properties === undefined){
+        properties = lang === 'en' ? 'Diet not found' : 'Erityisruokavaliota ei löytynyt';
+      }
       const price = sodexoCourse.price.split('/').join(' | ');
 
       const course = {
