@@ -7,6 +7,7 @@ import getWeekDay from './weekday';
 let lang;
 let activeCampus;
 
+// Get the lunch menu from fazers or sodexo API
 const getLunchMenu = async () => {
   const menu =
     campuses[activeCampus].restaurant === 'fazer'
@@ -15,6 +16,7 @@ const getLunchMenu = async () => {
   return menu;
 };
 
+// Render the lunch cards
 const renderCards = async (menu, cardContainer, background) => {
   menu.forEach((course) => {
     const card = document.createElement('div');

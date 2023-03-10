@@ -33,11 +33,14 @@ const getFazerCourses = async (campus, lang) => {
       `https://www.compass-group.fi/menuapi/feed/json?costNumber=${campus}&language=en`,
       true
     );
-    // Push the courses to the array
-    Object.entries(menuEn.MenusForDays[0].SetMenus).forEach((menu) => {
-      fazerCoursesen.push(menu[1]);
-    });
-
+    try {
+      // Push the courses to the array
+      Object.entries(menuEn.MenusForDays[0].SetMenus).forEach((menu) => {
+        fazerCoursesen.push(menu[1]);
+      });
+    } catch (error) {
+      console.log(error);
+    }
     // Array to store the formated courses
     const courses = [];
     if (lang === 'en') {
@@ -81,9 +84,13 @@ const getFazerCourses = async (campus, lang) => {
         const properties = fazerCourse.Components[0]
           .split(' (')[1]
           .split(')')[0];
-        let price = fazerCourse.Price.split('/');
-        price = price[0] + '€ | ' + price[1] + '€ | ' + price[2] + '€';
-
+        let price = 'Hintaa ei löytynyt';
+        try {
+          price = fazerCourse.Price.split('/');
+          price = price[0] + '€ | ' + price[1] + '€ | ' + price[2] + '€';
+        } catch (error) {
+          console.log(error);
+        }
         const course = {
           name: courseName,
           properties: properties,

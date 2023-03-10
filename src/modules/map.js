@@ -5,6 +5,7 @@ const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 let map;
 
+// render the map
 const renderMap = (mapElement, activeCoords) => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoibDR0ZSIsImEiOiJjbGVsam1nb2cwbG1nM3ZvZHZnNW1xdTFyIn0.dAyRz-rWWNr144ETVEsJRg';
@@ -16,6 +17,7 @@ const renderMap = (mapElement, activeCoords) => {
   });
 };
 
+// delete all map markers
 const deleteMarkers = () => {
   const markers = document.querySelectorAll('.mapboxgl-marker');
   markers.forEach((marker) => {
@@ -23,6 +25,7 @@ const deleteMarkers = () => {
   });
 };
 
+// add a marker to the map
 const addMarker = (coords) => {
   const marker = new mapboxgl.Marker()
     .setLngLat([coords[1], coords[0]])

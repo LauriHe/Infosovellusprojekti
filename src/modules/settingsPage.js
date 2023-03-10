@@ -1,4 +1,9 @@
-const displaySettingsPage = (lang) => {
+// create form for settings page
+const displaySettingsPage = (config) => {
+  // get language and search radius from config
+  const lang = config.lang;
+  const searchRadius = config.searchRadius;
+
   const container = document.querySelector('.container');
   container.innerHTML = '';
 
@@ -9,6 +14,7 @@ const displaySettingsPage = (lang) => {
   const form = document.createElement('form');
   form.classList.add('settings-form');
 
+  // campus selection
   const campusLabel = document.createElement('label');
   campusLabel.classList.add('settings-label');
 
@@ -44,13 +50,13 @@ const displaySettingsPage = (lang) => {
   campusLabel.appendChild(campusLabelText);
   campusLabel.appendChild(campusSelect);
 
+  // language selection
   const langLabel = document.createElement('label');
   langLabel.classList.add('settings-label');
 
   const langLabelText = document.createElement('span');
   langLabelText.classList.add('settings-label-text');
   langLabelText.innerHTML = lang === 'en' ? 'Language' : 'Kieli';
-
 
   const langSelect = document.createElement('select');
   langSelect.classList.add('settings-select');
@@ -70,16 +76,20 @@ const displaySettingsPage = (lang) => {
   langLabel.appendChild(langLabelText);
   langLabel.appendChild(langSelect);
 
+  // search radius selection
   const searchRadiusLabel = document.createElement('label');
   searchRadiusLabel.classList.add('settings-label');
 
   const searchRadiusLabelText = document.createElement('span');
   searchRadiusLabelText.classList.add('settings-label-text');
-  searchRadiusLabelText.innerHTML = lang === 'en' ? 'Bus stop search radius' : 'Pysäkkien haku etäisyys';
+  searchRadiusLabelText.innerHTML =
+    lang === 'en' ? 'Bus stop search radius' : 'Pysäkkien haku etäisyys';
 
   const searchRadiusInput = document.createElement('input');
+  searchRadiusInput.value = searchRadius;
   searchRadiusInput.classList.add('settings-input');
-  searchRadiusInput.placeholder = lang === 'en' ? 'Maximum of 1000 meters' : 'Maksimi 1000 metriä';
+  searchRadiusInput.placeholder =
+    lang === 'en' ? 'Maximum of 1000 meters' : 'Maksimi 1000 metriä';
   searchRadiusInput.id = 'searchRadius';
   searchRadiusInput.type = 'number';
   searchRadiusInput.min = '0';
@@ -90,16 +100,18 @@ const displaySettingsPage = (lang) => {
   searchRadiusLabel.appendChild(searchRadiusLabelText);
   searchRadiusLabel.appendChild(searchRadiusInput);
 
+  // info box to guide the user
   const infobox = document.createElement('div');
   infobox.classList.add('infobox');
-  infobox.textContent = lang === 'en' ? 'Enter a radius in numbers (meters) to search for nearby bus stops. The maximum radius is 1000 meters.' : 'Syötä säde numeroina (metreinä) etsiäksesi lähellä olevia pysäkkejä. Suurin sallittu arvo on 1000 metriä.';
-  
+  infobox.textContent =
+    lang === 'en'
+      ? 'Enter a radius in numbers (meters) to search for nearby bus stops. The maximum radius is 1000 meters.'
+      : 'Syötä säde numeroina (metreinä) etsiäksesi lähellä olevia pysäkkejä. Suurin sallittu arvo on 1000 metriä.';
 
   const submitButton = document.createElement('button');
   submitButton.classList.add('settings-submit-button');
   submitButton.type = 'submit';
   submitButton.innerHTML = lang === 'en' ? 'Save' : 'Tallenna';
-  
 
   form.appendChild(campusLabel);
   form.appendChild(langLabel);
@@ -110,27 +122,30 @@ const displaySettingsPage = (lang) => {
   container.appendChild(heading);
   container.appendChild(form);
 
+  // get settings from local storage
   const settings = JSON.parse(localStorage.getItem('settings'));
 
+  // set values to form
   if (settings) {
     document.querySelector('#campus').value = settings.campus;
     document.querySelector('#lang').value = settings.lang;
     document.querySelector('#searchRadius').value = settings.searchRadius;
   }
 
+  // save settings to local storage
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const campus = document.querySelector('#campus').value;
     const lang = document.querySelector('#lang').value;
     const searchRadius = document.querySelector('#searchRadius').value;
-    
+
     localStorage.setItem(
       'settings',
       JSON.stringify({
         campus,
         lang,
         searchRadius,
-      }), 
+      })
     );
     window.location.reload();
   });

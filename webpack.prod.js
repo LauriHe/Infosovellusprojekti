@@ -34,9 +34,9 @@ module.exports = merge(common, {
       skipWaiting: true,
     }),
     new WebpackPwaManifest({
-      name: 'Lunch Progressive Web App',
-      short_name: 'LunchPWA',
-      description: 'Describe your Progressive Web App here',
+      name: 'Info Duck',
+      short_name: 'Info Duck',
+      description: 'Metropolia campus information',
       background_color: '#ffffff',
       crossorigin: 'use-credentials',
       publicPath: '.',
