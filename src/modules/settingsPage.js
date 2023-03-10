@@ -123,7 +123,7 @@ const displaySettingsPage = (lang) => {
     const campus = document.querySelector('#campus').value;
     const lang = document.querySelector('#lang').value;
     const searchRadius = document.querySelector('#searchRadius').value;
-	
+    
     localStorage.setItem(
       'settings',
       JSON.stringify({
@@ -132,7 +132,7 @@ const displaySettingsPage = (lang) => {
         searchRadius,
       }), 
     );
-    displaySettingsPage(lang);
+    window.location.reload();
   });
 };
 

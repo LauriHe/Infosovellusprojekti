@@ -45,6 +45,7 @@ const initializeLunchPage = async (config) => {
   // Get config and set global variables
   lang = config.lang;
   activeCampus = config.campus;
+  const campusName = activeCampus.substring(0, 1).toUpperCase() + activeCampus.substring(1).replace('yyrmaki', 'yyrmäki'); 
 
   const container = document.querySelector('.container');
   container.innerHTML = '';
@@ -62,7 +63,7 @@ const initializeLunchPage = async (config) => {
 
   heading.innerHTML =
     // eslint-disable-next-line quotes
-    lang === 'en' ? weekDay + "'s menu" : weekDay + 'n ruokalista';
+    lang === 'en' ? weekDay + "'s Menu " + campusName: weekDay + 'n Ruokalista ' + campusName;
 
   const cardContainer = document.createElement('div');
   cardContainer.classList.add('lunch-card-container');
